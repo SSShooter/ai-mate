@@ -49,10 +49,13 @@ export function RecordList({ category, searchQuery = "", onRecordClick, refreshT
     )
   })
 
-  const formatDate = (date: Date) => {
+  const formatDate = (date: Date | number) => {
     try {
+      // Convert timestamp to Date if needed
+      const dateObj = typeof date === 'number' ? new Date(date) : date
+      
       // Check if date is valid
-      if (!date || isNaN(date.getTime())) {
+      if (!dateObj || isNaN(dateObj.getTime())) {
         return "无效日期"
       }
       return new Intl.DateTimeFormat('zh-CN', {
@@ -61,7 +64,7 @@ export function RecordList({ category, searchQuery = "", onRecordClick, refreshT
         day: '2-digit',
         hour: '2-digit',
         minute: '2-digit'
-      }).format(date)
+      }).format(dateObj)
     } catch (error) {
       return "无效日期"
     }

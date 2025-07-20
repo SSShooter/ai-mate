@@ -2,6 +2,7 @@ import React, { useState } from "react"
 import type { Record, RecordCategory } from "~types"
 import { storageService } from "~services/storage"
 import { ConfirmDialog } from "./ConfirmDialog"
+import { formatDate } from '~services/utils'
 
 interface RecordDetailProps {
   record: Record
@@ -29,24 +30,7 @@ export function RecordDetail({ record, onClose, onUpdate, onDelete }: RecordDeta
   const [error, setError] = useState<string | null>(null)
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false)
 
-  const formatDate = (date: Date) => {
-    try {
-      // Check if date is valid
-      if (!date || isNaN(date.getTime())) {
-        return "无效日期"
-      }
-      return new Intl.DateTimeFormat('zh-CN', {
-        year: 'numeric',
-        month: '2-digit',
-        day: '2-digit',
-        hour: '2-digit',
-        minute: '2-digit',
-        second: '2-digit'
-      }).format(date)
-    } catch (error) {
-      return "无效日期"
-    }
-  }
+ 
 
   const handleSave = async () => {
     if (!editForm.content.trim()) {
@@ -62,7 +46,7 @@ export function RecordDetail({ record, onClose, onUpdate, onDelete }: RecordDeta
         ...record,
         content: editForm.content.trim(),
         category: editForm.category,
-        updatedAt: new Date()
+        updatedAt: Date.now()
       }
 
       await storageService.updateRecord(updatedRecord)

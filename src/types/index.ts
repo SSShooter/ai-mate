@@ -1,6 +1,6 @@
 // Core data types and interfaces for the quick note and prompt extension
 
-export type RecordCategory = 'inspiration' | 'todo' | 'principle' | 'other'
+export type RecordCategory = "inspiration" | "todo" | "principle" | "other"
 
 export interface Record {
   id: string
@@ -8,8 +8,8 @@ export interface Record {
   category: RecordCategory
   sourceUrl: string
   sourceTitle: string
-  createdAt: Date
-  updatedAt: Date
+  createdAt: number
+  updatedAt: number
 }
 
 export interface Prompt {
@@ -18,8 +18,8 @@ export interface Prompt {
   title: string
   content: string
   description?: string
-  createdAt: Date
-  updatedAt: Date
+  createdAt: number
+  updatedAt: number
 }
 
 export interface ShortcutConfig {
@@ -41,10 +41,10 @@ export interface StorageSchema {
 
 // Error handling types
 export enum ErrorType {
-  STORAGE_ERROR = 'STORAGE_ERROR',
-  VALIDATION_ERROR = 'VALIDATION_ERROR',
-  PERMISSION_ERROR = 'PERMISSION_ERROR',
-  NETWORK_ERROR = 'NETWORK_ERROR'
+  STORAGE_ERROR = "STORAGE_ERROR",
+  VALIDATION_ERROR = "VALIDATION_ERROR",
+  PERMISSION_ERROR = "PERMISSION_ERROR",
+  NETWORK_ERROR = "NETWORK_ERROR"
 }
 
 export interface AppError {

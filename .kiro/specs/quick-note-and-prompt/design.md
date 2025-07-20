@@ -138,8 +138,8 @@ interface Record {
   category: RecordCategory
   sourceUrl: string
   sourceTitle: string
-  createdAt: Date
-  updatedAt: Date
+  createdAt: number
+  updatedAt: number
 }
 
 type RecordCategory = "inspiration" | "todo" | "principle" | "other"
@@ -154,8 +154,8 @@ interface Prompt {
   title: string
   content: string
   description?: string
-  createdAt: Date
-  updatedAt: Date
+  createdAt: number
+  updatedAt: number
 }
 ```
 

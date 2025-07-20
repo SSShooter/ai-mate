@@ -62,11 +62,10 @@ export class ChromeStorageService implements IStorageService {
       const records = await this.getAllRecords()
       const existingIndex = records.findIndex((r) => r.id === record.id)
 
-      // Convert dates to timestamps for storage
+      // Ensure updatedAt is current timestamp
       const recordToStore = {
         ...record,
-        createdAt: record.createdAt.getTime(),
-        updatedAt: new Date().getTime()
+        updatedAt: Date.now()
       }
 
       if (existingIndex >= 0) {
@@ -107,11 +106,11 @@ export class ChromeStorageService implements IStorageService {
       const result = await chrome.storage.local.get(this.STORAGE_KEYS.RECORDS)
       const records = result[this.STORAGE_KEYS.RECORDS] || []
 
-      // Convert timestamps back to Date objects with validation
-      return records.map((record) => ({
+      // Ensure timestamps are numbers with validation
+      return records.map((record: any) => ({
         ...record,
-        createdAt: record.createdAt ? new Date(record.createdAt) : new Date(),
-        updatedAt: record.updatedAt ? new Date(record.updatedAt) : new Date()
+        createdAt: record.createdAt || Date.now(),
+        updatedAt: record.updatedAt || Date.now()
       }))
     } catch (error) {
       throw new Error(`Failed to get all records: ${error.message}`)
@@ -119,7 +118,7 @@ export class ChromeStorageService implements IStorageService {
   }
 
   async updateRecord(record: Record): Promise<void> {
-    await this.saveRecord({ ...record, updatedAt: new Date() })
+    await this.saveRecord({ ...record, updatedAt: Date.now() })
   }
 
   async deleteRecord(recordId: string): Promise<void> {
@@ -139,6 +138,7 @@ export class ChromeStorageService implements IStorageService {
 
   // Prompt operations
   async savePrompt(prompt: Prompt): Promise<void> {
+    debugger
     try {
       const prompts = await this.getAllPrompts()
       const existingIndex = prompts.findIndex((p) => p.id === prompt.id)
@@ -152,11 +152,11 @@ export class ChromeStorageService implements IStorageService {
       }
 
       if (existingIndex >= 0) {
-        prompts[existingIndex] = { ...prompt, updatedAt: new Date() }
+        prompts[existingIndex] = { ...prompt, updatedAt: Date.now() }
       } else {
         prompts.push(prompt)
       }
-
+      console.log(prompts,'prompts')
       await chrome.storage.local.set({ [this.STORAGE_KEYS.PROMPTS]: prompts })
     } catch (error) {
       throw new Error(`Failed to save prompt: ${error.message}`)
@@ -168,11 +168,11 @@ export class ChromeStorageService implements IStorageService {
       const result = await chrome.storage.local.get(this.STORAGE_KEYS.PROMPTS)
       const prompts = result[this.STORAGE_KEYS.PROMPTS] || []
 
-      // Convert date strings back to Date objects with validation
-      return prompts.map((prompt) => ({
+      // Ensure timestamps are numbers with validation
+      return prompts.map((prompt: any) => ({
         ...prompt,
-        createdAt: prompt.createdAt ? new Date(prompt.createdAt) : new Date(),
-        updatedAt: prompt.updatedAt ? new Date(prompt.updatedAt) : new Date()
+        createdAt: prompt.createdAt || Date.now(),
+        updatedAt: prompt.updatedAt || Date.now()
       }))
     } catch (error) {
       throw new Error(`Failed to get all prompts: ${error.message}`)
@@ -189,7 +189,7 @@ export class ChromeStorageService implements IStorageService {
   }
 
   async updatePrompt(prompt: Prompt): Promise<void> {
-    await this.savePrompt({ ...prompt, updatedAt: new Date() })
+    await this.savePrompt({ ...prompt, updatedAt: Date.now() })
   }
 
   async deletePrompt(promptId: string): Promise<void> {

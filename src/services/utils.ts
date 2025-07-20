@@ -122,7 +122,7 @@ export function createRecord(
   sourceUrl: string,
   sourceTitle: string
 ): Record {
-  const now = new Date()
+  const now = Date.now()
 
   return {
     id: generateId(),
@@ -144,7 +144,7 @@ export function createPrompt(
   content: string,
   description?: string
 ): Prompt {
-  const now = new Date()
+  const now = Date.now()
 
   return {
     id: generateId(),
@@ -177,16 +177,28 @@ export function truncateText(text: string, maxLength: number): string {
 /**
  * Format date for display
  */
-export function formatDate(date: Date): string {
-  return new Intl.DateTimeFormat("zh-CN", {
-    year: "numeric",
-    month: "2-digit",
-    day: "2-digit",
-    hour: "2-digit",
-    minute: "2-digit"
-  }).format(date)
-}
+export const formatDate = (date: Date | number) => {
+  try {
+    // Convert timestamp to Date if needed
+    const dateObj = typeof date === "number" ? new Date(date) : date
 
+    // Check if date is valid
+    if (!dateObj || isNaN(dateObj.getTime())) {
+      return "无效日期"
+    }
+
+    return new Intl.DateTimeFormat("zh-CN", {
+      year: "numeric",
+      month: "2-digit",
+      day: "2-digit",
+      hour: "2-digit",
+      minute: "2-digit",
+      second: "2-digit"
+    }).format(dateObj)
+  } catch (error) {
+    return "无效日期"
+  }
+}
 /**
  * Search records by content
  */
@@ -279,4 +291,3 @@ export function getRecordCountByCategory(records: Record[]): {
     other: grouped["other"].length
   }
 }
-
