@@ -1,4 +1,10 @@
-import type { Record, Prompt, RecordCategory, StorageSchema, AppSettings } from "~types"
+import type {
+  AppSettings,
+  Prompt,
+  Record,
+  RecordCategory,
+  StorageSchema
+} from "~types"
 
 /**
  * Storage Service Interface
@@ -11,7 +17,7 @@ export interface IStorageService {
   getAllRecords(): Promise<Record[]>
   updateRecord(record: Record): Promise<void>
   deleteRecord(recordId: string): Promise<void>
-  
+
   // Prompt operations
   savePrompt(prompt: Prompt): Promise<void>
   getAllPrompts(): Promise<Prompt[]>
@@ -19,11 +25,11 @@ export interface IStorageService {
   updatePrompt(prompt: Prompt): Promise<void>
   deletePrompt(promptId: string): Promise<void>
   isPromptKeyUnique(key: string, excludeId?: string): Promise<boolean>
-  
+
   // Settings operations
   getSettings(): Promise<AppSettings>
   updateSettings(settings: Partial<AppSettings>): Promise<void>
-  
+
   // Utility operations
   clearAllData(): Promise<void>
   exportData(): Promise<StorageSchema>
@@ -36,17 +42,17 @@ export interface IStorageService {
  */
 export class ChromeStorageService implements IStorageService {
   private readonly STORAGE_KEYS = {
-    RECORDS: 'records',
-    PROMPTS: 'prompts',
-    SETTINGS: 'settings'
+    RECORDS: "records",
+    PROMPTS: "prompts",
+    SETTINGS: "settings"
   } as const
 
   private readonly DEFAULT_SETTINGS: AppSettings = {
-    defaultCategory: 'other',
+    defaultCategory: "other",
     enableNotifications: true,
     shortcutKeys: {
-      quickRecord: 'Ctrl+Shift+S',
-      promptTrigger: '/pmt:'
+      quickRecord: "Ctrl+Shift+S",
+      promptTrigger: "/pmt:"
     }
   }
 
@@ -54,14 +60,14 @@ export class ChromeStorageService implements IStorageService {
   async saveRecord(record: Record): Promise<void> {
     try {
       const records = await this.getAllRecords()
-      const existingIndex = records.findIndex(r => r.id === record.id)
-      
+      const existingIndex = records.findIndex((r) => r.id === record.id)
+
       if (existingIndex >= 0) {
         records[existingIndex] = { ...record, updatedAt: new Date() }
       } else {
         records.push(record)
       }
-      
+
       await chrome.storage.local.set({ [this.STORAGE_KEYS.RECORDS]: records })
     } catch (error) {
       throw new Error(`Failed to save record: ${error.message}`)
@@ -71,7 +77,7 @@ export class ChromeStorageService implements IStorageService {
   async getRecordsByCategory(category: RecordCategory): Promise<Record[]> {
     try {
       const allRecords = await this.getAllRecords()
-      return allRecords.filter(record => record.category === category)
+      return allRecords.filter((record) => record.category === category)
     } catch (error) {
       throw new Error(`Failed to get records by category: ${error.message}`)
     }
@@ -81,9 +87,9 @@ export class ChromeStorageService implements IStorageService {
     try {
       const result = await chrome.storage.local.get(this.STORAGE_KEYS.RECORDS)
       const records = result[this.STORAGE_KEYS.RECORDS] || []
-      
+
       // Convert date strings back to Date objects
-      return records.map(record => ({
+      return records.map((record) => ({
         ...record,
         createdAt: new Date(record.createdAt),
         updatedAt: new Date(record.updatedAt)
@@ -100,8 +106,10 @@ export class ChromeStorageService implements IStorageService {
   async deleteRecord(recordId: string): Promise<void> {
     try {
       const records = await this.getAllRecords()
-      const filteredRecords = records.filter(record => record.id !== recordId)
-      await chrome.storage.local.set({ [this.STORAGE_KEYS.RECORDS]: filteredRecords })
+      const filteredRecords = records.filter((record) => record.id !== recordId)
+      await chrome.storage.local.set({
+        [this.STORAGE_KEYS.RECORDS]: filteredRecords
+      })
     } catch (error) {
       throw new Error(`Failed to delete record: ${error.message}`)
     }
@@ -111,20 +119,22 @@ export class ChromeStorageService implements IStorageService {
   async savePrompt(prompt: Prompt): Promise<void> {
     try {
       const prompts = await this.getAllPrompts()
-      const existingIndex = prompts.findIndex(p => p.id === prompt.id)
-      
+      const existingIndex = prompts.findIndex((p) => p.id === prompt.id)
+
       // Check for duplicate key (only if it's a new prompt or key has changed)
-      const existingKeyPrompt = prompts.find(p => p.key === prompt.key && p.id !== prompt.id)
+      const existingKeyPrompt = prompts.find(
+        (p) => p.key === prompt.key && p.id !== prompt.id
+      )
       if (existingKeyPrompt) {
-        throw new Error('Prompt key已存在，请使用其他key')
+        throw new Error("Prompt key已存在，请使用其他key")
       }
-      
+
       if (existingIndex >= 0) {
         prompts[existingIndex] = { ...prompt, updatedAt: new Date() }
       } else {
         prompts.push(prompt)
       }
-      
+
       await chrome.storage.local.set({ [this.STORAGE_KEYS.PROMPTS]: prompts })
     } catch (error) {
       throw new Error(`Failed to save prompt: ${error.message}`)
@@ -135,9 +145,9 @@ export class ChromeStorageService implements IStorageService {
     try {
       const result = await chrome.storage.local.get(this.STORAGE_KEYS.PROMPTS)
       const prompts = result[this.STORAGE_KEYS.PROMPTS] || []
-      
+
       // Convert date strings back to Date objects
-      return prompts.map(prompt => ({
+      return prompts.map((prompt) => ({
         ...prompt,
         createdAt: new Date(prompt.createdAt),
         updatedAt: new Date(prompt.updatedAt)
@@ -150,7 +160,7 @@ export class ChromeStorageService implements IStorageService {
   async getPromptByKey(key: string): Promise<Prompt | null> {
     try {
       const prompts = await this.getAllPrompts()
-      return prompts.find(prompt => prompt.key === key) || null
+      return prompts.find((prompt) => prompt.key === key) || null
     } catch (error) {
       throw new Error(`Failed to get prompt by key: ${error.message}`)
     }
@@ -163,8 +173,10 @@ export class ChromeStorageService implements IStorageService {
   async deletePrompt(promptId: string): Promise<void> {
     try {
       const prompts = await this.getAllPrompts()
-      const filteredPrompts = prompts.filter(prompt => prompt.id !== promptId)
-      await chrome.storage.local.set({ [this.STORAGE_KEYS.PROMPTS]: filteredPrompts })
+      const filteredPrompts = prompts.filter((prompt) => prompt.id !== promptId)
+      await chrome.storage.local.set({
+        [this.STORAGE_KEYS.PROMPTS]: filteredPrompts
+      })
     } catch (error) {
       throw new Error(`Failed to delete prompt: ${error.message}`)
     }
@@ -173,7 +185,9 @@ export class ChromeStorageService implements IStorageService {
   async isPromptKeyUnique(key: string, excludeId?: string): Promise<boolean> {
     try {
       const prompts = await this.getAllPrompts()
-      return !prompts.some(prompt => prompt.key === key && prompt.id !== excludeId)
+      return !prompts.some(
+        (prompt) => prompt.key === key && prompt.id !== excludeId
+      )
     } catch (error) {
       throw new Error(`Failed to check prompt key uniqueness: ${error.message}`)
     }
@@ -193,7 +207,9 @@ export class ChromeStorageService implements IStorageService {
     try {
       const currentSettings = await this.getSettings()
       const updatedSettings = { ...currentSettings, ...settings }
-      await chrome.storage.local.set({ [this.STORAGE_KEYS.SETTINGS]: updatedSettings })
+      await chrome.storage.local.set({
+        [this.STORAGE_KEYS.SETTINGS]: updatedSettings
+      })
     } catch (error) {
       throw new Error(`Failed to update settings: ${error.message}`)
     }
@@ -215,7 +231,7 @@ export class ChromeStorageService implements IStorageService {
         this.getAllPrompts(),
         this.getSettings()
       ])
-      
+
       return { records, prompts, settings }
     } catch (error) {
       throw new Error(`Failed to export data: ${error.message}`)
