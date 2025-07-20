@@ -95,7 +95,7 @@
 
 - [ ] 7. 集成和优化
 
-  - [ ] 7.1 连接 Content Script 和 Side panel UI
+  - [x] 7.1 连接 Content Script 和 Side panel UI
 
     - 实现用户通过 Content Script 更新记录后，Side panel UI 自动刷新
     - _Requirements: 1.2_

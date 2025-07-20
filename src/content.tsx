@@ -156,6 +156,18 @@ class TextSelectionHandler {
       await storageService.saveRecord(record)
       this.showNotification(SUCCESS_MESSAGES.RECORD_SAVED, "success")
 
+      // Notify side panel to refresh immediately
+      try {
+        await chrome.runtime.sendMessage({
+          action: 'recordSaved',
+          record: record,
+          category: category
+        })
+      } catch (messageError) {
+        // Side panel might not be open, which is fine
+        console.log('Side panel not available for immediate refresh:', messageError)
+      }
+
       // Clear selection after successful save
       window.getSelection()?.removeAllRanges()
       this.selectedText = ""
