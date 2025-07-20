@@ -29,32 +29,6 @@ class BackgroundService {
     if (message.action === "setupContextMenu") {
       this.createContextMenus()
       sendResponse({ success: true })
-    } else if (message.action === "recordSaved") {
-      // Forward the message to all side panels to ensure they refresh
-      try {
-        // Get all tabs to send message to their side panels
-        const tabs = await chrome.tabs.query({})
-        for (const tab of tabs) {
-          if (tab.id) {
-            try {
-              // Try to send message to side panel via tab
-              await chrome.runtime.sendMessage({
-                action: 'recordSaved',
-                record: message.record,
-                category: message.category,
-                tabId: tab.id
-              })
-            } catch (error) {
-              // Side panel might not be open for this tab, which is fine
-              console.log(`Side panel not available for tab ${tab.id}`)
-            }
-          }
-        }
-        sendResponse({ success: true })
-      } catch (error) {
-        console.error("Failed to forward recordSaved message:", error)
-        sendResponse({ success: false, error: error.message })
-      }
     }
     
     return true // Keep message channel open for async response
