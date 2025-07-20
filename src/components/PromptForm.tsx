@@ -43,9 +43,9 @@ export function PromptForm({ prompt, onSave, onCancel }: PromptFormProps) {
 
     // Key validation
     if (!formData.key.trim()) {
-      newErrors.key = "Key 不能为空"
+      newErrors.key = chrome.i18n.getMessage("keyEmpty")
     } else if (!/^[a-zA-Z0-9_-]+$/.test(formData.key)) {
-      newErrors.key = "Key 只能包含字母、数字、下划线和连字符"
+      newErrors.key = chrome.i18n.getMessage("keyInvalid")
     } else {
       // Check key uniqueness
       const isUnique = await storageService.isPromptKeyUnique(
@@ -53,18 +53,18 @@ export function PromptForm({ prompt, onSave, onCancel }: PromptFormProps) {
         prompt?.id
       )
       if (!isUnique) {
-        newErrors.key = "该 Key 已存在，请使用其他 Key"
+        newErrors.key = chrome.i18n.getMessage("keyExists")
       }
     }
 
     // Title validation
     if (!formData.title.trim()) {
-      newErrors.title = "标题不能为空"
+      newErrors.title = chrome.i18n.getMessage("titleEmpty")
     }
 
     // Content validation
     if (!formData.content.trim()) {
-      newErrors.content = "内容不能为空"
+      newErrors.content = chrome.i18n.getMessage("contentEmpty")
     }
 
     setErrors(newErrors)
@@ -98,7 +98,7 @@ export function PromptForm({ prompt, onSave, onCancel }: PromptFormProps) {
       onSave(promptData)
     } catch (error) {
       setErrors({
-        submit: error instanceof Error ? error.message : "保存失败，请重试"
+        submit: error instanceof Error ? error.message : chrome.i18n.getMessage("saveFailed")
       })
     } finally {
       setSaving(false)
@@ -119,7 +119,7 @@ export function PromptForm({ prompt, onSave, onCancel }: PromptFormProps) {
         <div className="plasmo-p-6">
           <div className="plasmo-flex plasmo-items-center plasmo-justify-between plasmo-mb-4">
             <h2 className="plasmo-text-lg plasmo-font-semibold plasmo-text-gray-900">
-              {prompt ? "编辑 Prompt" : "添加 Prompt"}
+              {prompt ? chrome.i18n.getMessage("editPrompt") : chrome.i18n.getMessage("addPrompt")}
             </h2>
             <button
               onClick={onCancel}
@@ -143,7 +143,7 @@ export function PromptForm({ prompt, onSave, onCancel }: PromptFormProps) {
             {/* Key Field */}
             <div>
               <label className="plasmo-block plasmo-text-sm plasmo-font-medium plasmo-text-gray-700 plasmo-mb-1">
-                Key *
+                {chrome.i18n.getMessage("keyLabel")}
               </label>
               <input
                 type="text"
@@ -154,7 +154,7 @@ export function PromptForm({ prompt, onSave, onCancel }: PromptFormProps) {
                     ? "plasmo-border-red-300 plasmo-bg-red-50"
                     : "plasmo-border-gray-300 focus:plasmo-border-blue-500 focus:plasmo-ring-1 focus:plasmo-ring-blue-500"
                 }`}
-                placeholder="例如: greeting, summary, translate"
+                placeholder={chrome.i18n.getMessage("keyPlaceholder")}
               />
               {errors.key && (
                 <p className="plasmo-text-red-500 plasmo-text-xs plasmo-mt-1">
@@ -162,14 +162,14 @@ export function PromptForm({ prompt, onSave, onCancel }: PromptFormProps) {
                 </p>
               )}
               <p className="plasmo-text-gray-500 plasmo-text-xs plasmo-mt-1">
-                用于触发 Prompt 的唯一标识，只能包含字母、数字、下划线和连字符
+                {chrome.i18n.getMessage("keyHelp")}
               </p>
             </div>
 
             {/* Title Field */}
             <div>
               <label className="plasmo-block plasmo-text-sm plasmo-font-medium plasmo-text-gray-700 plasmo-mb-1">
-                标题 *
+                {chrome.i18n.getMessage("titleLabel")}
               </label>
               <input
                 type="text"
@@ -180,7 +180,7 @@ export function PromptForm({ prompt, onSave, onCancel }: PromptFormProps) {
                     ? "plasmo-border-red-300 plasmo-bg-red-50"
                     : "plasmo-border-gray-300 focus:plasmo-border-blue-500 focus:plasmo-ring-1 focus:plasmo-ring-blue-500"
                 }`}
-                placeholder="Prompt 的显示名称"
+                placeholder={chrome.i18n.getMessage("titlePlaceholder")}
               />
               {errors.title && (
                 <p className="plasmo-text-red-500 plasmo-text-xs plasmo-mt-1">
@@ -192,7 +192,7 @@ export function PromptForm({ prompt, onSave, onCancel }: PromptFormProps) {
             {/* Description Field */}
             <div>
               <label className="plasmo-block plasmo-text-sm plasmo-font-medium plasmo-text-gray-700 plasmo-mb-1">
-                描述
+                {chrome.i18n.getMessage("descriptionLabel")}
               </label>
               <input
                 type="text"
@@ -201,14 +201,14 @@ export function PromptForm({ prompt, onSave, onCancel }: PromptFormProps) {
                   handleInputChange("description", e.target.value)
                 }
                 className="plasmo-w-full plasmo-px-3 plasmo-py-2 plasmo-border plasmo-border-gray-300 plasmo-rounded-md plasmo-text-sm focus:plasmo-border-blue-500 focus:plasmo-ring-1 focus:plasmo-ring-blue-500 plasmo-transition-colors"
-                placeholder="简短描述这个 Prompt 的用途（可选）"
+                placeholder={chrome.i18n.getMessage("descriptionPlaceholder")}
               />
             </div>
 
             {/* Content Field */}
             <div>
               <label className="plasmo-block plasmo-text-sm plasmo-font-medium plasmo-text-gray-700 plasmo-mb-1">
-                内容 *
+                {chrome.i18n.getMessage("contentLabel")}
               </label>
               <textarea
                 value={formData.content}
@@ -219,7 +219,7 @@ export function PromptForm({ prompt, onSave, onCancel }: PromptFormProps) {
                     ? "plasmo-border-red-300 plasmo-bg-red-50"
                     : "plasmo-border-gray-300 focus:plasmo-border-blue-500 focus:plasmo-ring-1 focus:plasmo-ring-blue-500"
                 }`}
-                placeholder="输入 Prompt 的具体内容..."
+                placeholder={chrome.i18n.getMessage("contentPlaceholder")}
               />
               {errors.content && (
                 <p className="plasmo-text-red-500 plasmo-text-xs plasmo-mt-1">
@@ -241,13 +241,13 @@ export function PromptForm({ prompt, onSave, onCancel }: PromptFormProps) {
                 type="button"
                 onClick={onCancel}
                 className="plasmo-flex-1 plasmo-px-4 plasmo-py-2 plasmo-text-sm plasmo-font-medium plasmo-text-gray-700 plasmo-bg-gray-100 plasmo-border plasmo-border-gray-300 plasmo-rounded-md hover:plasmo-bg-gray-200 plasmo-transition-colors">
-                取消
+                {chrome.i18n.getMessage("cancel")}
               </button>
               <button
                 type="submit"
                 disabled={saving}
                 className="plasmo-flex-1 plasmo-px-4 plasmo-py-2 plasmo-text-sm plasmo-font-medium plasmo-text-white plasmo-bg-blue-600 plasmo-border plasmo-border-transparent plasmo-rounded-md hover:plasmo-bg-blue-700 disabled:plasmo-opacity-50 disabled:plasmo-cursor-not-allowed plasmo-transition-colors">
-                {saving ? "保存中..." : "保存"}
+                {saving ? chrome.i18n.getMessage("saving") : chrome.i18n.getMessage("save")}
               </button>
             </div>
           </form>

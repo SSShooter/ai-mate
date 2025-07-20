@@ -9,11 +9,8 @@ interface RecordListProps {
   refreshTrigger?: number
 }
 
-const CATEGORY_LABELS: { [K in RecordCategory]: string } = {
-  inspiration: "灵感",
-  todo: "待办",
-  principle: "原则",
-  other: "其他"
+const getCategoryLabel = (category: RecordCategory): string => {
+  return chrome.i18n.getMessage(category)
 }
 
 export function RecordList({ category, searchQuery = "", onRecordClick, refreshTrigger }: RecordListProps) {
@@ -32,7 +29,7 @@ export function RecordList({ category, searchQuery = "", onRecordClick, refreshT
       const categoryRecords = await storageService.getRecordsByCategory(category)
       setRecords(categoryRecords)
     } catch (err) {
-      setError(err instanceof Error ? err.message : "加载记录失败")
+      setError(err instanceof Error ? err.message : chrome.i18n.getMessage("loadRecordsFailed"))
     } finally {
       setLoading(false)
     }
@@ -58,7 +55,7 @@ export function RecordList({ category, searchQuery = "", onRecordClick, refreshT
       
       // Check if date is valid
       if (!dateObj || isNaN(dateObj.getTime())) {
-        return "无效日期"
+        return chrome.i18n.getMessage("invalidDate")
       }
       return new Intl.DateTimeFormat('zh-CN', {
         year: 'numeric',
@@ -68,7 +65,7 @@ export function RecordList({ category, searchQuery = "", onRecordClick, refreshT
         minute: '2-digit'
       }).format(dateObj)
     } catch (error) {
-      return "无效日期"
+      return chrome.i18n.getMessage("invalidDate")
     }
   }
 
@@ -80,7 +77,7 @@ export function RecordList({ category, searchQuery = "", onRecordClick, refreshT
   if (loading) {
     return (
       <div className="plasmo-flex plasmo-items-center plasmo-justify-center plasmo-py-8">
-        <div className="plasmo-text-sm plasmo-text-gray-500">加载中...</div>
+        <div className="plasmo-text-sm plasmo-text-gray-500">{chrome.i18n.getMessage("loading")}</div>
       </div>
     )
   }
@@ -88,13 +85,13 @@ export function RecordList({ category, searchQuery = "", onRecordClick, refreshT
   if (error) {
     return (
       <div className="plasmo-flex plasmo-flex-col plasmo-items-center plasmo-justify-center plasmo-py-8">
-        <div className="plasmo-text-sm plasmo-text-red-500 plasmo-mb-2">加载失败</div>
+        <div className="plasmo-text-sm plasmo-text-red-500 plasmo-mb-2">{chrome.i18n.getMessage("loadFailed")}</div>
         <div className="plasmo-text-xs plasmo-text-gray-400 plasmo-mb-4">{error}</div>
         <button
           onClick={loadRecords}
           className="plasmo-px-3 plasmo-py-1 plasmo-text-xs plasmo-bg-blue-500 plasmo-text-white plasmo-rounded hover:plasmo-bg-blue-600"
         >
-          重试
+          {chrome.i18n.getMessage("retry")}
         </button>
       </div>
     )
@@ -110,10 +107,10 @@ export function RecordList({ category, searchQuery = "", onRecordClick, refreshT
           </svg>
         </div>
         <div className="plasmo-text-sm plasmo-text-gray-500 plasmo-mb-1">
-          {searchQuery.trim() ? "没有找到匹配的记录" : `暂无${CATEGORY_LABELS[category]}记录`}
+          {searchQuery.trim() ? chrome.i18n.getMessage("noRecordsFound") : chrome.i18n.getMessage("noRecordsInCategory", getCategoryLabel(category))}
         </div>
         <div className="plasmo-text-xs plasmo-text-gray-400">
-          {searchQuery.trim() ? "尝试调整搜索关键词" : "在网页上选中文本并右键快速记录"}
+          {searchQuery.trim() ? chrome.i18n.getMessage("adjustSearchKeywords") : chrome.i18n.getMessage("quickRecordHint")}
         </div>
       </div>
     )

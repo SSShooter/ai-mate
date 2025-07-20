@@ -1,0 +1,198 @@
+{
+  "appTitle": {
+    "message": "Quick Note & Prompt"
+  },
+  "recordManagement": {
+    "message": "记录管理"
+  },
+  "promptManagement": {
+    "message": "Prompt 管理"
+  },
+  "inspiration": {
+    "message": "灵感"
+  },
+  "todo": {
+    "message": "待办"
+  },
+  "principle": {
+    "message": "原则"
+  },
+  "other": {
+    "message": "其他"
+  },
+  "searchPlaceholder": {
+    "message": "搜索记录内容、标题或网址..."
+  },
+  "addPrompt": {
+    "message": "添加 Prompt"
+  },
+  "deletePrompt": {
+    "message": "删除 Prompt"
+  },
+  "deletePromptConfirm": {
+    "message": "确定要删除 Prompt \"$title$\" 吗？此操作无法撤销。",
+    "placeholders": {
+      "title": {
+        "content": "$1"
+      }
+    }
+  },
+  "delete": {
+    "message": "删除"
+  },
+  "cancel": {
+    "message": "取消"
+  },
+  "confirm": {
+    "message": "确认"
+  },
+  "edit": {
+    "message": "编辑"
+  },
+  "save": {
+    "message": "保存"
+  },
+  "saving": {
+    "message": "保存中..."
+  },
+  "loading": {
+    "message": "加载中..."
+  },
+  "retry": {
+    "message": "重试"
+  },
+  "editPrompt": {
+    "message": "编辑 Prompt"
+  },
+  "keyLabel": {
+    "message": "Key *"
+  },
+  "titleLabel": {
+    "message": "标题 *"
+  },
+  "descriptionLabel": {
+    "message": "描述"
+  },
+  "contentLabel": {
+    "message": "内容 *"
+  },
+  "keyPlaceholder": {
+    "message": "例如: greeting, summary, translate"
+  },
+  "titlePlaceholder": {
+    "message": "Prompt 的显示名称"
+  },
+  "descriptionPlaceholder": {
+    "message": "简短描述这个 Prompt 的用途（可选）"
+  },
+  "contentPlaceholder": {
+    "message": "输入 Prompt 的具体内容..."
+  },
+  "keyHelp": {
+    "message": "用于触发 Prompt 的唯一标识，只能包含字母、数字、下划线和连字符"
+  },
+  "keyEmpty": {
+    "message": "Key 不能为空"
+  },
+  "keyInvalid": {
+    "message": "Key 只能包含字母、数字、下划线和连字符"
+  },
+  "keyExists": {
+    "message": "该 Key 已存在，请使用其他 Key"
+  },
+  "titleEmpty": {
+    "message": "标题不能为空"
+  },
+  "contentEmpty": {
+    "message": "内容不能为空"
+  },
+  "saveFailed": {
+    "message": "保存失败，请重试"
+  },
+  "loadPromptsFailed": {
+    "message": "加载 Prompt 失败"
+  },
+  "noPrompts": {
+    "message": "暂无 Prompt"
+  },
+  "noPromptsHint": {
+    "message": "点击上方\"添加 Prompt\"按钮创建第一个 Prompt"
+  },
+  "updatedAt": {
+    "message": "更新于 $time$",
+    "placeholders": {
+      "time": {
+        "content": "$1"
+      }
+    }
+  },
+  "recordDetail": {
+    "message": "记录详情"
+  },
+  "recordContent": {
+    "message": "记录内容"
+  },
+  "category": {
+    "message": "分组"
+  },
+  "sourceInfo": {
+    "message": "来源信息"
+  },
+  "timeInfo": {
+    "message": "时间信息"
+  },
+  "createdAt": {
+    "message": "创建时间: $time$",
+    "placeholders": {
+      "time": {
+        "content": "$1"
+      }
+    }
+  },
+  "updatedAtTime": {
+    "message": "更新时间: $time$",
+    "placeholders": {
+      "time": {
+        "content": "$1"
+      }
+    }
+  },
+  "recordContentEmpty": {
+    "message": "记录内容不能为空"
+  },
+  "confirmDelete": {
+    "message": "确认删除"
+  },
+  "deleteRecordConfirm": {
+    "message": "确定要删除这条记录吗？此操作无法撤销。"
+  },
+  "loadRecordsFailed": {
+    "message": "加载记录失败"
+  },
+  "loadFailed": {
+    "message": "加载失败"
+  },
+  "noRecordsFound": {
+    "message": "没有找到匹配的记录"
+  },
+  "noRecordsInCategory": {
+    "message": "暂无$category$记录",
+    "placeholders": {
+      "category": {
+        "content": "$1"
+      }
+    }
+  },
+  "adjustSearchKeywords": {
+    "message": "尝试调整搜索关键词"
+  },
+  "quickRecordHint": {
+    "message": "在网页上选中文本并右键快速记录"
+  },
+  "invalidDate": {
+    "message": "无效日期"
+  },
+  "searchRecords": {
+    "message": "搜索记录..."
+  }
+}

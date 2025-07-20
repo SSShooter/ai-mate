@@ -8,7 +8,7 @@ interface SearchBarProps {
   className?: string
 }
 
-export function SearchBar({ value, onChange, placeholder = "搜索记录...", className = "" }: SearchBarProps) {
+export function SearchBar({ value, onChange, placeholder = chrome.i18n.getMessage("searchRecords"), className = "" }: SearchBarProps) {
   const [localValue, setLocalValue] = useState(value)
   const debouncedValue = useDebounce(localValue, 300) // 300ms debounce
 

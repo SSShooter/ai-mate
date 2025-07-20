@@ -14,11 +14,8 @@ import type { Prompt, Record } from "~types"
 type NavigationTab = "records" | "prompts"
 type RecordCategory = "inspiration" | "todo" | "principle" | "other"
 
-const CATEGORY_LABELS: { [K in RecordCategory]: string } = {
-  inspiration: "灵感",
-  todo: "待办",
-  principle: "原则",
-  other: "其他"
+const getCategoryLabel = (category: RecordCategory): string => {
+  return chrome.i18n.getMessage(category)
 }
 
 function IndexSidepanel() {
@@ -139,7 +136,7 @@ function IndexSidepanel() {
       {/* Header */}
       <div className="plasmo-bg-blue-600 plasmo-text-white plasmo-p-4">
         <h1 className="plasmo-text-xl plasmo-font-semibold">
-          Quick Note & Prompt
+          {chrome.i18n.getMessage("appTitle")}
         </h1>
       </div>
 
@@ -152,7 +149,7 @@ function IndexSidepanel() {
               ? "plasmo-bg-blue-50 plasmo-text-blue-600 plasmo-border-b-2 plasmo-border-blue-600"
               : "plasmo-text-gray-600 hover:plasmo-text-gray-800 hover:plasmo-bg-gray-50"
           }`}>
-          记录管理
+          {chrome.i18n.getMessage("recordManagement")}
         </button>
         <button
           onClick={() => setActiveTab("prompts")}
@@ -161,7 +158,7 @@ function IndexSidepanel() {
               ? "plasmo-bg-blue-50 plasmo-text-blue-600 plasmo-border-b-2 plasmo-border-blue-600"
               : "plasmo-text-gray-600 hover:plasmo-text-gray-800 hover:plasmo-bg-gray-50"
           }`}>
-          Prompt 管理
+          {chrome.i18n.getMessage("promptManagement")}
         </button>
       </div>
 
@@ -171,20 +168,25 @@ function IndexSidepanel() {
           <div className="plasmo-h-full plasmo-flex plasmo-flex-col">
             {/* Category Tabs */}
             <div className="plasmo-flex plasmo-bg-gray-50 plasmo-border-b plasmo-border-gray-200">
-              {(Object.keys(CATEGORY_LABELS) as RecordCategory[]).map(
-                (category) => (
-                  <button
-                    key={category}
-                    onClick={() => setActiveCategory(category)}
-                    className={`plasmo-flex-1 plasmo-py-3 plasmo-px-4 plasmo-text-sm plasmo-font-medium plasmo-transition-colors ${
-                      activeCategory === category
-                        ? "plasmo-bg-white plasmo-text-blue-600 plasmo-border-b-2 plasmo-border-blue-600"
-                        : "plasmo-text-gray-600 hover:plasmo-text-gray-800 hover:plasmo-bg-gray-100"
-                    }`}>
-                    {CATEGORY_LABELS[category]}
-                  </button>
-                )
-              )}
+              {(
+                [
+                  "inspiration",
+                  "todo",
+                  "principle",
+                  "other"
+                ] as RecordCategory[]
+              ).map((category) => (
+                <button
+                  key={category}
+                  onClick={() => setActiveCategory(category)}
+                  className={`plasmo-flex-1 plasmo-py-3 plasmo-px-4 plasmo-text-sm plasmo-font-medium plasmo-transition-colors ${
+                    activeCategory === category
+                      ? "plasmo-bg-white plasmo-text-blue-600 plasmo-border-b-2 plasmo-border-blue-600"
+                      : "plasmo-text-gray-600 hover:plasmo-text-gray-800 hover:plasmo-bg-gray-100"
+                  }`}>
+                  {getCategoryLabel(category)}
+                </button>
+              ))}
             </div>
 
             {/* Search Bar */}
@@ -192,7 +194,7 @@ function IndexSidepanel() {
               <SearchBar
                 value={searchQuery}
                 onChange={setSearchQuery}
-                placeholder="搜索记录内容、标题或网址..."
+                placeholder={chrome.i18n.getMessage("searchPlaceholder")}
               />
             </div>
 
@@ -213,12 +215,12 @@ function IndexSidepanel() {
             <div className="plasmo-p-6 plasmo-bg-white plasmo-border-b plasmo-border-gray-200">
               <div className="plasmo-flex plasmo-items-center plasmo-justify-between">
                 <h2 className="plasmo-text-xl plasmo-font-medium plasmo-text-gray-900">
-                  Prompt 管理
+                  {chrome.i18n.getMessage("promptManagement")}
                 </h2>
                 <button
                   onClick={handleAddPrompt}
                   className="plasmo-px-4 plasmo-py-2 plasmo-text-base plasmo-font-medium plasmo-text-white plasmo-bg-blue-600 plasmo-border plasmo-border-transparent plasmo-rounded-md hover:plasmo-bg-blue-700 plasmo-transition-colors">
-                  添加 Prompt
+                  {chrome.i18n.getMessage("addPrompt")}
                 </button>
               </div>
             </div>
@@ -258,10 +260,13 @@ function IndexSidepanel() {
       {promptToDelete && (
         <ConfirmDialog
           isOpen={true}
-          title="删除 Prompt"
-          message={`确定要删除 Prompt "${promptToDelete.title}" 吗？此操作无法撤销。`}
-          confirmText="删除"
-          cancelText="取消"
+          title={chrome.i18n.getMessage("deletePrompt")}
+          message={chrome.i18n.getMessage(
+            "deletePromptConfirm",
+            promptToDelete.title
+          )}
+          confirmText={chrome.i18n.getMessage("delete")}
+          cancelText={chrome.i18n.getMessage("cancel")}
           onConfirm={handleConfirmDeletePrompt}
           onCancel={handleCancelDeletePrompt}
           isDestructive={true}

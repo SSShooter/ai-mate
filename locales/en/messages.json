@@ -1,0 +1,198 @@
+{
+  "appTitle": {
+    "message": "Quick Note & Prompt"
+  },
+  "recordManagement": {
+    "message": "Record Management"
+  },
+  "promptManagement": {
+    "message": "Prompt Management"
+  },
+  "inspiration": {
+    "message": "Inspiration"
+  },
+  "todo": {
+    "message": "Todo"
+  },
+  "principle": {
+    "message": "Principle"
+  },
+  "other": {
+    "message": "Other"
+  },
+  "searchPlaceholder": {
+    "message": "Search records by content, title or URL..."
+  },
+  "addPrompt": {
+    "message": "Add Prompt"
+  },
+  "deletePrompt": {
+    "message": "Delete Prompt"
+  },
+  "deletePromptConfirm": {
+    "message": "Are you sure you want to delete prompt \"$title$\"? This action cannot be undone.",
+    "placeholders": {
+      "title": {
+        "content": "$1"
+      }
+    }
+  },
+  "delete": {
+    "message": "Delete"
+  },
+  "cancel": {
+    "message": "Cancel"
+  },
+  "confirm": {
+    "message": "Confirm"
+  },
+  "edit": {
+    "message": "Edit"
+  },
+  "save": {
+    "message": "Save"
+  },
+  "saving": {
+    "message": "Saving..."
+  },
+  "loading": {
+    "message": "Loading..."
+  },
+  "retry": {
+    "message": "Retry"
+  },
+  "editPrompt": {
+    "message": "Edit Prompt"
+  },
+  "keyLabel": {
+    "message": "Key *"
+  },
+  "titleLabel": {
+    "message": "Title *"
+  },
+  "descriptionLabel": {
+    "message": "Description"
+  },
+  "contentLabel": {
+    "message": "Content *"
+  },
+  "keyPlaceholder": {
+    "message": "e.g.: greeting, summary, translate"
+  },
+  "titlePlaceholder": {
+    "message": "Display name for the prompt"
+  },
+  "descriptionPlaceholder": {
+    "message": "Brief description of this prompt's purpose (optional)"
+  },
+  "contentPlaceholder": {
+    "message": "Enter the specific content of the prompt..."
+  },
+  "keyHelp": {
+    "message": "Unique identifier for triggering the prompt, can only contain letters, numbers, underscores and hyphens"
+  },
+  "keyEmpty": {
+    "message": "Key cannot be empty"
+  },
+  "keyInvalid": {
+    "message": "Key can only contain letters, numbers, underscores and hyphens"
+  },
+  "keyExists": {
+    "message": "This key already exists, please use another key"
+  },
+  "titleEmpty": {
+    "message": "Title cannot be empty"
+  },
+  "contentEmpty": {
+    "message": "Content cannot be empty"
+  },
+  "saveFailed": {
+    "message": "Save failed, please try again"
+  },
+  "loadPromptsFailed": {
+    "message": "Failed to load prompts"
+  },
+  "noPrompts": {
+    "message": "No prompts yet"
+  },
+  "noPromptsHint": {
+    "message": "Click the \"Add Prompt\" button above to create your first prompt"
+  },
+  "updatedAt": {
+    "message": "Updated at $time$",
+    "placeholders": {
+      "time": {
+        "content": "$1"
+      }
+    }
+  },
+  "recordDetail": {
+    "message": "Record Detail"
+  },
+  "recordContent": {
+    "message": "Record Content"
+  },
+  "category": {
+    "message": "Category"
+  },
+  "sourceInfo": {
+    "message": "Source Information"
+  },
+  "timeInfo": {
+    "message": "Time Information"
+  },
+  "createdAt": {
+    "message": "Created at: $time$",
+    "placeholders": {
+      "time": {
+        "content": "$1"
+      }
+    }
+  },
+  "updatedAtTime": {
+    "message": "Updated at: $time$",
+    "placeholders": {
+      "time": {
+        "content": "$1"
+      }
+    }
+  },
+  "recordContentEmpty": {
+    "message": "Record content cannot be empty"
+  },
+  "confirmDelete": {
+    "message": "Confirm Delete"
+  },
+  "deleteRecordConfirm": {
+    "message": "Are you sure you want to delete this record? This action cannot be undone."
+  },
+  "loadRecordsFailed": {
+    "message": "Failed to load records"
+  },
+  "loadFailed": {
+    "message": "Load failed"
+  },
+  "noRecordsFound": {
+    "message": "No matching records found"
+  },
+  "noRecordsInCategory": {
+    "message": "No $category$ records yet",
+    "placeholders": {
+      "category": {
+        "content": "$1"
+      }
+    }
+  },
+  "adjustSearchKeywords": {
+    "message": "Try adjusting search keywords"
+  },
+  "quickRecordHint": {
+    "message": "Select text on a webpage and right-click to quickly record"
+  },
+  "invalidDate": {
+    "message": "Invalid date"
+  },
+  "searchRecords": {
+    "message": "Search records..."
+  }
+}

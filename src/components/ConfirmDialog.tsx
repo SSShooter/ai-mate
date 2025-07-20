@@ -15,8 +15,8 @@ export function ConfirmDialog({
   isOpen,
   title,
   message,
-  confirmText = "确认",
-  cancelText = "取消",
+  confirmText = chrome.i18n.getMessage("confirm"),
+  cancelText = chrome.i18n.getMessage("cancel"),
   onConfirm,
   onCancel,
   isDestructive = false
@@ -44,8 +44,7 @@ export function ConfirmDialog({
         <div className="plasmo-flex plasmo-space-x-2 plasmo-p-4 plasmo-border-t plasmo-border-gray-200">
           <button
             onClick={onCancel}
-            className="plasmo-flex-1 plasmo-px-3 plasmo-py-2 plasmo-text-sm plasmo-text-gray-700 plasmo-bg-gray-100 plasmo-rounded-md hover:plasmo-bg-gray-200 plasmo-transition-colors"
-          >
+            className="plasmo-flex-1 plasmo-px-3 plasmo-py-2 plasmo-text-sm plasmo-text-gray-700 plasmo-bg-gray-100 plasmo-rounded-md hover:plasmo-bg-gray-200 plasmo-transition-colors">
             {cancelText}
           </button>
           <button
@@ -54,8 +53,7 @@ export function ConfirmDialog({
               isDestructive
                 ? "plasmo-bg-red-600 hover:plasmo-bg-red-700"
                 : "plasmo-bg-blue-600 hover:plasmo-bg-blue-700"
-            }`}
-          >
+            }`}>
             {confirmText}
           </button>
         </div>

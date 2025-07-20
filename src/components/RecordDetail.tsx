@@ -11,11 +11,8 @@ interface RecordDetailProps {
   onDelete: (recordId: string) => void
 }
 
-const CATEGORY_LABELS: { [K in RecordCategory]: string } = {
-  inspiration: "灵感",
-  todo: "待办", 
-  principle: "原则",
-  other: "其他"
+const getCategoryLabel = (category: RecordCategory): string => {
+  return chrome.i18n.getMessage(category)
 }
 
 const CATEGORY_OPTIONS: RecordCategory[] = ["inspiration", "todo", "principle", "other"]
@@ -34,7 +31,7 @@ export function RecordDetail({ record, onClose, onUpdate, onDelete }: RecordDeta
 
   const handleSave = async () => {
     if (!editForm.content.trim()) {
-      setError("记录内容不能为空")
+      setError(chrome.i18n.getMessage("recordContentEmpty"))
       return
     }
 
@@ -53,7 +50,7 @@ export function RecordDetail({ record, onClose, onUpdate, onDelete }: RecordDeta
       onUpdate(updatedRecord)
       setIsEditing(false)
     } catch (err) {
-      setError(err instanceof Error ? err.message : "保存失败")
+      setError(err instanceof Error ? err.message : chrome.i18n.getMessage("saveFailed"))
     } finally {
       setSaving(false)
     }
@@ -78,7 +75,7 @@ export function RecordDetail({ record, onClose, onUpdate, onDelete }: RecordDeta
       onDelete(record.id)
       setShowDeleteConfirm(false)
     } catch (err) {
-      setError(err instanceof Error ? err.message : "删除失败")
+      setError(err instanceof Error ? err.message : chrome.i18n.getMessage("saveFailed"))
       setShowDeleteConfirm(false)
     }
   }
@@ -93,7 +90,7 @@ export function RecordDetail({ record, onClose, onUpdate, onDelete }: RecordDeta
         {/* Header */}
         <div className="plasmo-flex plasmo-items-center plasmo-justify-between plasmo-p-4 plasmo-border-b plasmo-border-gray-200">
           <h3 className="plasmo-text-lg plasmo-font-semibold plasmo-text-gray-800">
-            记录详情
+            {chrome.i18n.getMessage("recordDetail")}
           </h3>
           <button
             onClick={onClose}
@@ -112,20 +109,20 @@ export function RecordDetail({ record, onClose, onUpdate, onDelete }: RecordDeta
               {/* Content Editor */}
               <div>
                 <label className="plasmo-block plasmo-text-sm plasmo-font-medium plasmo-text-gray-700 plasmo-mb-2">
-                  记录内容
+                  {chrome.i18n.getMessage("recordContent")}
                 </label>
                 <textarea
                   value={editForm.content}
                   onChange={(e) => setEditForm(prev => ({ ...prev, content: e.target.value }))}
                   className="plasmo-w-full plasmo-h-24 plasmo-px-3 plasmo-py-2 plasmo-border plasmo-border-gray-300 plasmo-rounded-md plasmo-text-sm plasmo-resize-none focus:plasmo-outline-none focus:plasmo-ring-2 focus:plasmo-ring-blue-500 focus:plasmo-border-transparent"
-                  placeholder="请输入记录内容..."
+                  placeholder={chrome.i18n.getMessage("contentPlaceholder")}
                 />
               </div>
 
               {/* Category Selector */}
               <div>
                 <label className="plasmo-block plasmo-text-sm plasmo-font-medium plasmo-text-gray-700 plasmo-mb-2">
-                  分组
+                  {chrome.i18n.getMessage("category")}
                 </label>
                 <select
                   value={editForm.category}
@@ -134,7 +131,7 @@ export function RecordDetail({ record, onClose, onUpdate, onDelete }: RecordDeta
                 >
                   {CATEGORY_OPTIONS.map(category => (
                     <option key={category} value={category}>
-                      {CATEGORY_LABELS[category]}
+                      {getCategoryLabel(category)}
                     </option>
                   ))}
                 </select>
@@ -151,7 +148,7 @@ export function RecordDetail({ record, onClose, onUpdate, onDelete }: RecordDeta
               {/* Content Display */}
               <div>
                 <label className="plasmo-block plasmo-text-sm plasmo-font-medium plasmo-text-gray-700 plasmo-mb-2">
-                  记录内容
+                  {chrome.i18n.getMessage("recordContent")}
                 </label>
                 <div className="plasmo-text-sm plasmo-text-gray-800 plasmo-leading-relaxed plasmo-bg-gray-50 plasmo-p-3 plasmo-rounded-md">
                   {record.content}
@@ -161,11 +158,11 @@ export function RecordDetail({ record, onClose, onUpdate, onDelete }: RecordDeta
               {/* Category Display */}
               <div>
                 <label className="plasmo-block plasmo-text-sm plasmo-font-medium plasmo-text-gray-700 plasmo-mb-2">
-                  分组
+                  {chrome.i18n.getMessage("category")}
                 </label>
                 <div className="plasmo-text-sm plasmo-text-gray-800">
                   <span className="plasmo-inline-flex plasmo-items-center plasmo-px-2 plasmo-py-1 plasmo-rounded-full plasmo-text-xs plasmo-font-medium plasmo-bg-blue-100 plasmo-text-blue-800">
-                    {CATEGORY_LABELS[record.category]}
+                    {getCategoryLabel(record.category)}
                   </span>
                 </div>
               </div>
@@ -173,7 +170,7 @@ export function RecordDetail({ record, onClose, onUpdate, onDelete }: RecordDeta
               {/* Source Info */}
               <div>
                 <label className="plasmo-block plasmo-text-sm plasmo-font-medium plasmo-text-gray-700 plasmo-mb-2">
-                  来源信息
+                  {chrome.i18n.getMessage("sourceInfo")}
                 </label>
                 <div className="plasmo-space-y-2 plasmo-text-sm plasmo-text-gray-600">
                   <div className="plasmo-flex plasmo-items-start plasmo-space-x-2">
@@ -197,11 +194,11 @@ export function RecordDetail({ record, onClose, onUpdate, onDelete }: RecordDeta
               {/* Timestamps */}
               <div>
                 <label className="plasmo-block plasmo-text-sm plasmo-font-medium plasmo-text-gray-700 plasmo-mb-2">
-                  时间信息
+                  {chrome.i18n.getMessage("timeInfo")}
                 </label>
                 <div className="plasmo-space-y-1 plasmo-text-xs plasmo-text-gray-500">
-                  <div>创建时间: {formatDate(record.createdAt)}</div>
-                  <div>更新时间: {formatDate(record.updatedAt)}</div>
+                  <div>{chrome.i18n.getMessage("createdAt", formatDate(record.createdAt))}</div>
+                  <div>{chrome.i18n.getMessage("updatedAtTime", formatDate(record.updatedAt))}</div>
                 </div>
               </div>
             </div>
@@ -217,14 +214,14 @@ export function RecordDetail({ record, onClose, onUpdate, onDelete }: RecordDeta
                 disabled={saving}
                 className="plasmo-flex-1 plasmo-px-3 plasmo-py-2 plasmo-text-sm plasmo-text-gray-700 plasmo-bg-gray-100 plasmo-rounded-md hover:plasmo-bg-gray-200 plasmo-transition-colors disabled:plasmo-opacity-50"
               >
-                取消
+                {chrome.i18n.getMessage("cancel")}
               </button>
               <button
                 onClick={handleSave}
                 disabled={saving}
                 className="plasmo-flex-1 plasmo-px-3 plasmo-py-2 plasmo-text-sm plasmo-text-white plasmo-bg-blue-600 plasmo-rounded-md hover:plasmo-bg-blue-700 plasmo-transition-colors disabled:plasmo-opacity-50"
               >
-                {saving ? "保存中..." : "保存"}
+                {saving ? chrome.i18n.getMessage("saving") : chrome.i18n.getMessage("save")}
               </button>
             </div>
           ) : (
@@ -233,13 +230,13 @@ export function RecordDetail({ record, onClose, onUpdate, onDelete }: RecordDeta
                 onClick={handleDeleteClick}
                 className="plasmo-px-3 plasmo-py-2 plasmo-text-sm plasmo-text-red-600 plasmo-bg-red-50 plasmo-rounded-md hover:plasmo-bg-red-100 plasmo-transition-colors"
               >
-                删除
+                {chrome.i18n.getMessage("delete")}
               </button>
               <button
                 onClick={() => setIsEditing(true)}
                 className="plasmo-flex-1 plasmo-px-3 plasmo-py-2 plasmo-text-sm plasmo-text-white plasmo-bg-blue-600 plasmo-rounded-md hover:plasmo-bg-blue-700 plasmo-transition-colors"
               >
-                编辑
+                {chrome.i18n.getMessage("edit")}
               </button>
             </div>
           )}
@@ -249,10 +246,10 @@ export function RecordDetail({ record, onClose, onUpdate, onDelete }: RecordDeta
       {/* Delete Confirmation Dialog */}
       <ConfirmDialog
         isOpen={showDeleteConfirm}
-        title="确认删除"
-        message="确定要删除这条记录吗？此操作无法撤销。"
-        confirmText="删除"
-        cancelText="取消"
+        title={chrome.i18n.getMessage("confirmDelete")}
+        message={chrome.i18n.getMessage("deleteRecordConfirm")}
+        confirmText={chrome.i18n.getMessage("delete")}
+        cancelText={chrome.i18n.getMessage("cancel")}
         onConfirm={handleDeleteConfirm}
         onCancel={handleDeleteCancel}
         isDestructive={true}

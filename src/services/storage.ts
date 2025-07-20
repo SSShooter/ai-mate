@@ -138,7 +138,6 @@ export class ChromeStorageService implements IStorageService {
 
   // Prompt operations
   async savePrompt(prompt: Prompt): Promise<void> {
-    debugger
     try {
       const prompts = await this.getAllPrompts()
       const existingIndex = prompts.findIndex((p) => p.id === prompt.id)
@@ -156,7 +155,6 @@ export class ChromeStorageService implements IStorageService {
       } else {
         prompts.push(prompt)
       }
-      console.log(prompts,'prompts')
       await chrome.storage.local.set({ [this.STORAGE_KEYS.PROMPTS]: prompts })
     } catch (error) {
       throw new Error(`Failed to save prompt: ${error.message}`)

@@ -35,7 +35,7 @@ export function PromptList({
         allPrompts.sort((a, b) => b.createdAt - a.createdAt)
       )
     } catch (err) {
-      setError(err instanceof Error ? err.message : "加载 Prompt 失败")
+      setError(err instanceof Error ? err.message : chrome.i18n.getMessage("loadPromptsFailed"))
     } finally {
       setLoading(false)
     }
@@ -54,7 +54,7 @@ export function PromptList({
   if (loading) {
     return (
       <div className="plasmo-flex plasmo-items-center plasmo-justify-center plasmo-py-8">
-        <div className="plasmo-text-gray-500">加载中...</div>
+        <div className="plasmo-text-gray-500">{chrome.i18n.getMessage("loading")}</div>
       </div>
     )
   }
@@ -66,7 +66,7 @@ export function PromptList({
         <button
           onClick={loadPrompts}
           className="plasmo-text-blue-600 hover:plasmo-text-blue-800 plasmo-text-sm">
-          重试
+          {chrome.i18n.getMessage("retry")}
         </button>
       </div>
     )
@@ -75,9 +75,9 @@ export function PromptList({
   if (prompts.length === 0) {
     return (
       <div className="plasmo-text-center plasmo-py-8 plasmo-text-gray-500">
-        <div className="plasmo-mb-2">暂无 Prompt</div>
+        <div className="plasmo-mb-2">{chrome.i18n.getMessage("noPrompts")}</div>
         <div className="plasmo-text-sm">
-          点击上方"添加 Prompt"按钮创建第一个 Prompt
+          {chrome.i18n.getMessage("noPromptsHint")}
         </div>
       </div>
     )
@@ -109,14 +109,14 @@ export function PromptList({
                 {prompt.content}
               </p>
               <div className="plasmo-text-xs plasmo-text-gray-400 plasmo-mt-2">
-                更新于 {formatDate(prompt.updatedAt)}
+                {chrome.i18n.getMessage("updatedAt", formatDate(prompt.updatedAt))}
               </div>
             </div>
             <div className="plasmo-flex plasmo-gap-1 plasmo-ml-2">
               <button
                 onClick={(e) => handleEdit(prompt, e)}
                 className="plasmo-p-1 plasmo-text-gray-400 hover:plasmo-text-blue-600 plasmo-transition-colors"
-                title="编辑">
+                title={chrome.i18n.getMessage("edit")}>
                 <svg
                   className="plasmo-w-4 plasmo-h-4"
                   fill="none"
@@ -133,7 +133,7 @@ export function PromptList({
               <button
                 onClick={(e) => handleDelete(prompt, e)}
                 className="plasmo-p-1 plasmo-text-gray-400 hover:plasmo-text-red-600 plasmo-transition-colors"
-                title="删除">
+                title={chrome.i18n.getMessage("delete")}>
                 <svg
                   className="plasmo-w-4 plasmo-h-4"
                   fill="none"
