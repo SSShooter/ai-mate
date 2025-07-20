@@ -62,13 +62,32 @@ export class ChromeStorageService implements IStorageService {
       const records = await this.getAllRecords()
       const existingIndex = records.findIndex((r) => r.id === record.id)
 
-      if (existingIndex >= 0) {
-        records[existingIndex] = { ...record, updatedAt: new Date() }
-      } else {
-        records.push(record)
+      // Convert dates to timestamps for storage
+      const recordToStore = {
+        ...record,
+        createdAt: record.createdAt.getTime(),
+        updatedAt: new Date().getTime()
       }
 
-      await chrome.storage.local.set({ [this.STORAGE_KEYS.RECORDS]: records })
+      if (existingIndex >= 0) {
+        const existingRecords = await chrome.storage.local.get(
+          this.STORAGE_KEYS.RECORDS
+        )
+        const storedRecords = existingRecords[this.STORAGE_KEYS.RECORDS] || []
+        storedRecords[existingIndex] = recordToStore
+        await chrome.storage.local.set({
+          [this.STORAGE_KEYS.RECORDS]: storedRecords
+        })
+      } else {
+        const existingRecords = await chrome.storage.local.get(
+          this.STORAGE_KEYS.RECORDS
+        )
+        const storedRecords = existingRecords[this.STORAGE_KEYS.RECORDS] || []
+        storedRecords.push(recordToStore)
+        await chrome.storage.local.set({
+          [this.STORAGE_KEYS.RECORDS]: storedRecords
+        })
+      }
     } catch (error) {
       throw new Error(`Failed to save record: ${error.message}`)
     }
@@ -88,11 +107,11 @@ export class ChromeStorageService implements IStorageService {
       const result = await chrome.storage.local.get(this.STORAGE_KEYS.RECORDS)
       const records = result[this.STORAGE_KEYS.RECORDS] || []
 
-      // Convert date strings back to Date objects
+      // Convert timestamps back to Date objects with validation
       return records.map((record) => ({
         ...record,
-        createdAt: new Date(record.createdAt),
-        updatedAt: new Date(record.updatedAt)
+        createdAt: record.createdAt ? new Date(record.createdAt) : new Date(),
+        updatedAt: record.updatedAt ? new Date(record.updatedAt) : new Date()
       }))
     } catch (error) {
       throw new Error(`Failed to get all records: ${error.message}`)
@@ -105,8 +124,11 @@ export class ChromeStorageService implements IStorageService {
 
   async deleteRecord(recordId: string): Promise<void> {
     try {
-      const records = await this.getAllRecords()
-      const filteredRecords = records.filter((record) => record.id !== recordId)
+      const result = await chrome.storage.local.get(this.STORAGE_KEYS.RECORDS)
+      const records = result[this.STORAGE_KEYS.RECORDS] || []
+      const filteredRecords = records.filter(
+        (record: any) => record.id !== recordId
+      )
       await chrome.storage.local.set({
         [this.STORAGE_KEYS.RECORDS]: filteredRecords
       })
@@ -146,11 +168,11 @@ export class ChromeStorageService implements IStorageService {
       const result = await chrome.storage.local.get(this.STORAGE_KEYS.PROMPTS)
       const prompts = result[this.STORAGE_KEYS.PROMPTS] || []
 
-      // Convert date strings back to Date objects
+      // Convert date strings back to Date objects with validation
       return prompts.map((prompt) => ({
         ...prompt,
-        createdAt: new Date(prompt.createdAt),
-        updatedAt: new Date(prompt.updatedAt)
+        createdAt: prompt.createdAt ? new Date(prompt.createdAt) : new Date(),
+        updatedAt: prompt.updatedAt ? new Date(prompt.updatedAt) : new Date()
       }))
     } catch (error) {
       throw new Error(`Failed to get all prompts: ${error.message}`)

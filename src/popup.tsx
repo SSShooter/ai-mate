@@ -1,11 +1,15 @@
 import { useState } from "react"
 
 import "~style.css"
+import { RecordList } from "~components/RecordList"
+import { RecordDetail } from "~components/RecordDetail"
+import { SearchBar } from "~components/SearchBar"
+import type { Record } from "~types"
 
 type NavigationTab = "records" | "prompts"
 type RecordCategory = "inspiration" | "todo" | "principle" | "other"
 
-const CATEGORY_LABELS: Record<RecordCategory, string> = {
+const CATEGORY_LABELS: { [K in RecordCategory]: string } = {
   inspiration: "灵感",
   todo: "待办",
   principle: "原则",
@@ -15,6 +19,29 @@ const CATEGORY_LABELS: Record<RecordCategory, string> = {
 function IndexPopup() {
   const [activeTab, setActiveTab] = useState<NavigationTab>("records")
   const [activeCategory, setActiveCategory] = useState<RecordCategory>("inspiration")
+  const [selectedRecord, setSelectedRecord] = useState<Record | null>(null)
+  const [searchQuery, setSearchQuery] = useState("")
+  const [refreshTrigger, setRefreshTrigger] = useState(0)
+
+  const handleRecordClick = (record: Record) => {
+    setSelectedRecord(record)
+  }
+
+  const handleRecordUpdate = (updatedRecord: Record) => {
+    setSelectedRecord(updatedRecord)
+    // Trigger refresh of the record list
+    setRefreshTrigger(prev => prev + 1)
+  }
+
+  const handleRecordDelete = (recordId: string) => {
+    setSelectedRecord(null)
+    // Trigger refresh of the record list
+    setRefreshTrigger(prev => prev + 1)
+  }
+
+  const handleCloseDetail = () => {
+    setSelectedRecord(null)
+  }
 
   return (
     <div className="plasmo-w-96 plasmo-h-96 plasmo-bg-white plasmo-flex plasmo-flex-col">
@@ -68,16 +95,23 @@ function IndexPopup() {
               ))}
             </div>
 
+            {/* Search Bar */}
+            <div className="plasmo-p-3 plasmo-bg-white plasmo-border-b plasmo-border-gray-200">
+              <SearchBar
+                value={searchQuery}
+                onChange={setSearchQuery}
+                placeholder="搜索记录内容、标题或网址..."
+              />
+            </div>
+
             {/* Records Content */}
-            <div className="plasmo-flex-1 plasmo-p-4 plasmo-overflow-y-auto">
-              <div className="plasmo-text-center plasmo-text-gray-500 plasmo-mt-8">
-                <div className="plasmo-text-sm plasmo-mb-2">
-                  当前分组: {CATEGORY_LABELS[activeCategory]}
-                </div>
-                <div className="plasmo-text-xs plasmo-text-gray-400">
-                  记录列表功能即将推出
-                </div>
-              </div>
+            <div className="plasmo-flex-1 plasmo-p-4 plasmo-overflow-y-auto plasmo-bg-gray-50">
+              <RecordList 
+                category={activeCategory} 
+                searchQuery={searchQuery}
+                onRecordClick={handleRecordClick}
+                refreshTrigger={refreshTrigger}
+              />
             </div>
           </div>
         )}
@@ -89,6 +123,16 @@ function IndexPopup() {
           </div>
         )}
       </div>
+
+      {/* Record Detail Modal */}
+      {selectedRecord && (
+        <RecordDetail
+          record={selectedRecord}
+          onClose={handleCloseDetail}
+          onUpdate={handleRecordUpdate}
+          onDelete={handleRecordDelete}
+        />
+      )}
     </div>
   )
 }
