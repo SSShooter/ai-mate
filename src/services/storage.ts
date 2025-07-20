@@ -18,6 +18,7 @@ export interface IStorageService {
   getPromptByKey(key: string): Promise<Prompt | null>
   updatePrompt(prompt: Prompt): Promise<void>
   deletePrompt(promptId: string): Promise<void>
+  isPromptKeyUnique(key: string, excludeId?: string): Promise<boolean>
   
   // Settings operations
   getSettings(): Promise<AppSettings>
@@ -41,7 +42,7 @@ export class ChromeStorageService implements IStorageService {
   } as const
 
   private readonly DEFAULT_SETTINGS: AppSettings = {
-    defaultCategory: '其他',
+    defaultCategory: 'other',
     enableNotifications: true,
     shortcutKeys: {
       quickRecord: 'Ctrl+Shift+S',
@@ -112,6 +113,12 @@ export class ChromeStorageService implements IStorageService {
       const prompts = await this.getAllPrompts()
       const existingIndex = prompts.findIndex(p => p.id === prompt.id)
       
+      // Check for duplicate key (only if it's a new prompt or key has changed)
+      const existingKeyPrompt = prompts.find(p => p.key === prompt.key && p.id !== prompt.id)
+      if (existingKeyPrompt) {
+        throw new Error('Prompt key已存在，请使用其他key')
+      }
+      
       if (existingIndex >= 0) {
         prompts[existingIndex] = { ...prompt, updatedAt: new Date() }
       } else {
@@ -160,6 +167,15 @@ export class ChromeStorageService implements IStorageService {
       await chrome.storage.local.set({ [this.STORAGE_KEYS.PROMPTS]: filteredPrompts })
     } catch (error) {
       throw new Error(`Failed to delete prompt: ${error.message}`)
+    }
+  }
+
+  async isPromptKeyUnique(key: string, excludeId?: string): Promise<boolean> {
+    try {
+      const prompts = await this.getAllPrompts()
+      return !prompts.some(prompt => prompt.key === key && prompt.id !== excludeId)
+    } catch (error) {
+      throw new Error(`Failed to check prompt key uniqueness: ${error.message}`)
     }
   }
 

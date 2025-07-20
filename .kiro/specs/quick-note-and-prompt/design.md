@@ -14,19 +14,19 @@ graph TB
     B --> C[Storage Service]
     D[Popup UI] --> C
     E[Background Script] --> C
-    
+
     subgraph "Content Script Layer"
         B --> F[Text Selection Handler]
         B --> G[Prompt Replacement Engine]
         B --> H[Context Menu Handler]
     end
-    
+
     subgraph "UI Layer"
         D --> I[Record Management]
         D --> J[Prompt Management]
         D --> K[Settings Panel]
     end
-    
+
     subgraph "Data Layer"
         C --> L[Chrome Storage API]
         C --> M[Data Models]
@@ -34,6 +34,7 @@ graph TB
 ```
 
 ### 技术栈
+
 - **框架**: Plasmo 0.90.5
 - **UI**: React 18.2.0 + TypeScript
 - **样式**: Tailwind CSS 3.4.1
@@ -45,6 +46,7 @@ graph TB
 ### 1. Content Script Components
 
 #### TextSelectionHandler
+
 负责处理网页文本选择和快速记录功能。
 
 ```typescript
@@ -57,6 +59,7 @@ interface TextSelectionHandler {
 ```
 
 #### PromptReplacementEngine
+
 处理输入框中的 prompt 替换逻辑。
 
 ```typescript
@@ -71,6 +74,7 @@ interface PromptReplacementEngine {
 ### 2. Popup UI Components
 
 #### RecordManager
+
 记录管理界面组件。
 
 ```typescript
@@ -86,6 +90,7 @@ interface RecordManagerProps {
 ```
 
 #### PromptManager
+
 Prompt 模板管理界面组件。
 
 ```typescript
@@ -101,6 +106,7 @@ interface PromptManagerProps {
 ### 3. Storage Service
 
 #### StorageService
+
 统一的数据存储服务。
 
 ```typescript
@@ -111,7 +117,7 @@ interface StorageService {
   getAllRecords(): Promise<Record[]>
   updateRecord(record: Record): Promise<void>
   deleteRecord(recordId: string): Promise<void>
-  
+
   // Prompt operations
   savePrompt(prompt: Prompt): Promise<void>
   getAllPrompts(): Promise<Prompt[]>
@@ -124,6 +130,7 @@ interface StorageService {
 ## Data Models
 
 ### Record Model
+
 ```typescript
 interface Record {
   id: string
@@ -135,10 +142,11 @@ interface Record {
   updatedAt: Date
 }
 
-type RecordCategory = '灵感' | '待办' | '信条' | '其他'
+type RecordCategory = "inspiration" | "todo" | "principle" | "other"
 ```
 
 ### Prompt Model
+
 ```typescript
 interface Prompt {
   id: string
@@ -152,6 +160,7 @@ interface Prompt {
 ```
 
 ### Storage Schema
+
 ```typescript
 interface StorageSchema {
   records: Record[]
@@ -167,12 +176,13 @@ interface StorageSchema {
 ## Error Handling
 
 ### 错误类型定义
+
 ```typescript
 enum ErrorType {
-  STORAGE_ERROR = 'STORAGE_ERROR',
-  VALIDATION_ERROR = 'VALIDATION_ERROR',
-  PERMISSION_ERROR = 'PERMISSION_ERROR',
-  NETWORK_ERROR = 'NETWORK_ERROR'
+  STORAGE_ERROR = "STORAGE_ERROR",
+  VALIDATION_ERROR = "VALIDATION_ERROR",
+  PERMISSION_ERROR = "PERMISSION_ERROR",
+  NETWORK_ERROR = "NETWORK_ERROR"
 }
 
 interface AppError {
@@ -183,19 +193,20 @@ interface AppError {
 ```
 
 ### 错误处理策略
+
 1. **存储错误**: 显示用户友好的错误消息，提供重试选项
 2. **验证错误**: 实时表单验证，高亮错误字段
 3. **权限错误**: 引导用户检查扩展权限设置
 4. **网络错误**: 离线模式支持，数据本地缓存
 
-
-
 ## Performance Considerations
 
 ### 优化策略
+
 1. **防抖**: 搜索输入和 prompt 检测的防抖处理
 
 ### 内存管理
+
 - 及时清理事件监听器
 - 限制内存中缓存的数据量
 - 定期清理过期的临时数据
@@ -203,11 +214,13 @@ interface AppError {
 ## Security Considerations
 
 ### 数据安全
+
 - 敏感数据加密存储
 - 输入内容的 XSS 防护
 - CSP (Content Security Policy) 配置
 
 ### 权限最小化
+
 - 仅请求必要的 host_permissions
 - 限制 content script 的执行范围
 - 用户数据的本地存储，避免网络传输

@@ -15,7 +15,7 @@
 1. WHEN 用户在网页上选中文本 THEN 系统 SHALL 显示右键菜单选项用于快速记录
 2. WHEN 用户使用快捷键 THEN 系统 SHALL 将选中的文本记录到对应的分组中
 3. WHEN 记录成功 THEN 系统 SHALL 显示简短的成功提示
-4. WHEN 系统初始化 THEN 系统 SHALL 提供4个分组：灵感、待办、信条、其他
+4. WHEN 系统初始化 THEN 系统 SHALL 提供4个分组：inspiration、todo、principle、other
 
 ### Requirement 2
 
@@ -48,7 +48,7 @@
 
 #### Acceptance Criteria
 
-1. WHEN 用户打开记录管理页面 THEN 系统 SHALL 显示四个分组标签：灵感、待办、信条、其他
+1. WHEN 用户打开记录管理页面 THEN 系统 SHALL 显示四个分组标签：inspiration、todo、principle、other
 2. WHEN 系统初始化记录管理页面 THEN 系统 SHALL 按分组显示所有记录
 3. WHEN 用户选择特定分组标签 THEN 系统 SHALL 只显示该分组下的记录
 4. WHEN 某个分组没有记录 THEN 系统 SHALL 在该分组下显示友好的空状态提示

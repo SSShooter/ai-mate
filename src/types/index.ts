@@ -1,6 +1,6 @@
 // Core data types and interfaces for the quick note and prompt extension
 
-export type RecordCategory = '灵感' | '待办' | '信条' | '其他'
+export type RecordCategory = 'inspiration' | 'todo' | 'principle' | 'other'
 
 export interface Record {
   id: string
