@@ -40,16 +40,16 @@
     - 添加输入框事件监听
     - _Requirements: 2.1, 2.2, 2.3, 2.4_
 
-- [ ] 4. 构建 Popup UI 基础框架
+- [x] 4. 构建 Popup UI 基础框架
 
-  - [ ] 4.1 创建主界面布局和导航
+  - [x] 4.1 创建主界面布局和导航
 
     - 实现 Popup 主界面结构
     - 创建记录管理和 Prompt 管理的导航
     - 添加 Tailwind CSS 样式配置
     - _Requirements: 3.1, 4.1_
 
-  - [ ] 4.2 实现分组标签和切换功能
+  - [x] 4.2 实现分组标签和切换功能
     - 创建四个分组标签界面（inspiration、todo、principle、other）
     - 实现分组切换逻辑
     - 添加分组状态管理
