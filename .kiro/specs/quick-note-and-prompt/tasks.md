@@ -93,16 +93,14 @@
     - 实现 Prompt 删除逻辑
     - _Requirements: 3.4, 3.5, 3.6_
 
-- [ ] 7. 集成和优化
+- [x] 7. 集成和优化
 
   - [x] 7.1 连接 Content Script 和 Side panel UI
 
     - 实现用户通过 Content Script 更新记录后，Side panel UI 自动刷新
     - _Requirements: 1.2_
 
-
-  - [ ] 7.2 用户体验优化和最终调试
+  - [x] 7.2 用户体验优化和最终调试
     - record列表只需显示主要内容
     - record和prompt列表排序为又新到旧
     - 为搜索功能添加防抖处理
-    - 优化键盘导航和无障碍访问

@@ -38,16 +38,18 @@ export function RecordList({ category, searchQuery = "", onRecordClick, refreshT
     }
   }
 
-  // Filter records based on search query
-  const filteredRecords = records.filter(record => {
-    if (!searchQuery.trim()) return true
-    const query = searchQuery.toLowerCase()
-    return (
-      record.content.toLowerCase().includes(query) ||
-      record.sourceTitle.toLowerCase().includes(query) ||
-      record.sourceUrl.toLowerCase().includes(query)
-    )
-  })
+  // Filter and sort records based on search query (newest to oldest)
+  const filteredRecords = records
+    .filter(record => {
+      if (!searchQuery.trim()) return true
+      const query = searchQuery.toLowerCase()
+      return (
+        record.content.toLowerCase().includes(query) ||
+        record.sourceTitle.toLowerCase().includes(query) ||
+        record.sourceUrl.toLowerCase().includes(query)
+      )
+    })
+    .sort((a, b) => b.createdAt - a.createdAt)
 
   const formatDate = (date: Date | number) => {
     try {
@@ -125,22 +127,12 @@ export function RecordList({ category, searchQuery = "", onRecordClick, refreshT
           onClick={() => onRecordClick?.(record)}
           className="plasmo-bg-white plasmo-border plasmo-border-gray-200 plasmo-rounded-lg plasmo-p-3 hover:plasmo-shadow-sm plasmo-transition-shadow plasmo-cursor-pointer hover:plasmo-border-blue-300"
         >
-          {/* Record content */}
+          {/* Record content - main focus */}
           <div className="plasmo-text-sm plasmo-text-gray-800 plasmo-mb-2 plasmo-leading-relaxed">
-            {truncateText(record.content)}
+            {truncateText(record.content, 150)}
           </div>
           
-          {/* Source info */}
-          <div className="plasmo-text-xs plasmo-text-gray-500 plasmo-mb-2">
-            <div className="plasmo-truncate plasmo-mb-1" title={record.sourceTitle}>
-              📄 {record.sourceTitle}
-            </div>
-            <div className="plasmo-truncate" title={record.sourceUrl}>
-              🔗 {record.sourceUrl}
-            </div>
-          </div>
-          
-          {/* Timestamp */}
+          {/* Simplified metadata - only timestamp */}
           <div className="plasmo-text-xs plasmo-text-gray-400">
             {formatDate(record.createdAt)}
           </div>

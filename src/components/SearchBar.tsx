@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react"
+import { useDebounce } from "~hooks/useDebounce"
 
 interface SearchBarProps {
   value: string
@@ -9,18 +10,15 @@ interface SearchBarProps {
 
 export function SearchBar({ value, onChange, placeholder = "搜索记录...", className = "" }: SearchBarProps) {
   const [localValue, setLocalValue] = useState(value)
+  const debouncedValue = useDebounce(localValue, 300) // 300ms debounce
 
   useEffect(() => {
     setLocalValue(value)
   }, [value])
 
   useEffect(() => {
-    const timeoutId = setTimeout(() => {
-      onChange(localValue)
-    }, 300) // 300ms debounce
-
-    return () => clearTimeout(timeoutId)
-  }, [localValue, onChange])
+    onChange(debouncedValue)
+  }, [debouncedValue, onChange])
 
   const handleClear = () => {
     setLocalValue("")

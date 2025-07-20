@@ -30,8 +30,9 @@ export function PromptList({
       setLoading(true)
       setError(null)
       const allPrompts = await storageService.getAllPrompts()
+      // Sort by createdAt (newest to oldest) for consistency with records
       setPrompts(
-        allPrompts.sort((a, b) => b.updatedAt - a.updatedAt)
+        allPrompts.sort((a, b) => b.createdAt - a.createdAt)
       )
     } catch (err) {
       setError(err instanceof Error ? err.message : "加载 Prompt 失败")
