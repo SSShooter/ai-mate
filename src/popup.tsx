@@ -4,7 +4,11 @@ import "~style.css"
 import { RecordList } from "~components/RecordList"
 import { RecordDetail } from "~components/RecordDetail"
 import { SearchBar } from "~components/SearchBar"
-import type { Record } from "~types"
+import { PromptList } from "~components/PromptList"
+import { PromptForm } from "~components/PromptForm"
+import { ConfirmDialog } from "~components/ConfirmDialog"
+import type { Record, Prompt } from "~types"
+import { storageService } from "~services/storage"
 
 type NavigationTab = "records" | "prompts"
 type RecordCategory = "inspiration" | "todo" | "principle" | "other"
@@ -22,6 +26,12 @@ function IndexPopup() {
   const [selectedRecord, setSelectedRecord] = useState<Record | null>(null)
   const [searchQuery, setSearchQuery] = useState("")
   const [refreshTrigger, setRefreshTrigger] = useState(0)
+
+  // Prompt management state
+  const [promptRefreshTrigger, setPromptRefreshTrigger] = useState(0)
+  const [showPromptForm, setShowPromptForm] = useState(false)
+  const [editingPrompt, setEditingPrompt] = useState<Prompt | null>(null)
+  const [promptToDelete, setPromptToDelete] = useState<Prompt | null>(null)
 
   const handleRecordClick = (record: Record) => {
     setSelectedRecord(record)
@@ -41,6 +51,48 @@ function IndexPopup() {
 
   const handleCloseDetail = () => {
     setSelectedRecord(null)
+  }
+
+  // Prompt management handlers
+  const handleAddPrompt = () => {
+    setEditingPrompt(null)
+    setShowPromptForm(true)
+  }
+
+  const handleEditPrompt = (prompt: Prompt) => {
+    setEditingPrompt(prompt)
+    setShowPromptForm(true)
+  }
+
+  const handleDeletePrompt = (prompt: Prompt) => {
+    setPromptToDelete(prompt)
+  }
+
+  const handlePromptSave = (prompt: Prompt) => {
+    setShowPromptForm(false)
+    setEditingPrompt(null)
+    setPromptRefreshTrigger(prev => prev + 1)
+  }
+
+  const handlePromptFormCancel = () => {
+    setShowPromptForm(false)
+    setEditingPrompt(null)
+  }
+
+  const handleConfirmDeletePrompt = async () => {
+    if (promptToDelete) {
+      try {
+        await storageService.deletePrompt(promptToDelete.id)
+        setPromptToDelete(null)
+        setPromptRefreshTrigger(prev => prev + 1)
+      } catch (error) {
+        console.error("Failed to delete prompt:", error)
+      }
+    }
+  }
+
+  const handleCancelDeletePrompt = () => {
+    setPromptToDelete(null)
   }
 
   return (
@@ -116,9 +168,27 @@ function IndexPopup() {
           </div>
         )}
         {activeTab === "prompts" && (
-          <div className="plasmo-h-full plasmo-p-4">
-            <div className="plasmo-text-center plasmo-text-gray-500 plasmo-mt-8">
-              Prompt 管理功能即将推出
+          <div className="plasmo-h-full plasmo-flex plasmo-flex-col">
+            {/* Prompt Header with Add Button */}
+            <div className="plasmo-p-4 plasmo-bg-white plasmo-border-b plasmo-border-gray-200">
+              <div className="plasmo-flex plasmo-items-center plasmo-justify-between">
+                <h2 className="plasmo-text-lg plasmo-font-medium plasmo-text-gray-900">Prompt 管理</h2>
+                <button
+                  onClick={handleAddPrompt}
+                  className="plasmo-px-3 plasmo-py-2 plasmo-text-sm plasmo-font-medium plasmo-text-white plasmo-bg-blue-600 plasmo-border plasmo-border-transparent plasmo-rounded-md hover:plasmo-bg-blue-700 plasmo-transition-colors"
+                >
+                  添加 Prompt
+                </button>
+              </div>
+            </div>
+
+            {/* Prompt List */}
+            <div className="plasmo-flex-1 plasmo-p-4 plasmo-overflow-y-auto plasmo-bg-gray-50">
+              <PromptList
+                onEdit={handleEditPrompt}
+                onDelete={handleDeletePrompt}
+                refreshTrigger={promptRefreshTrigger}
+              />
             </div>
           </div>
         )}
@@ -131,6 +201,29 @@ function IndexPopup() {
           onClose={handleCloseDetail}
           onUpdate={handleRecordUpdate}
           onDelete={handleRecordDelete}
+        />
+      )}
+
+      {/* Prompt Form Modal */}
+      {showPromptForm && (
+        <PromptForm
+          prompt={editingPrompt}
+          onSave={handlePromptSave}
+          onCancel={handlePromptFormCancel}
+        />
+      )}
+
+      {/* Prompt Delete Confirmation Dialog */}
+      {promptToDelete && (
+        <ConfirmDialog
+          isOpen={true}
+          title="删除 Prompt"
+          message={`确定要删除 Prompt "${promptToDelete.title}" 吗？此操作无法撤销。`}
+          confirmText="删除"
+          cancelText="取消"
+          onConfirm={handleConfirmDeletePrompt}
+          onCancel={handleCancelDeletePrompt}
+          isDestructive={true}
         />
       )}
     </div>
