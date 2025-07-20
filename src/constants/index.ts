@@ -13,12 +13,12 @@ export const RECORD_CATEGORIES: { value: RecordCategory; label: string }[] = [
 ]
 
 // Default prompt trigger pattern
-export const DEFAULT_PROMPT_TRIGGER = "/pmt:"
+export const DEFAULT_PROMPT_TRIGGER = "/'"
 
 // Default shortcut keys
 export const DEFAULT_SHORTCUTS = {
   QUICK_RECORD: "Ctrl+Shift+S",
-  PROMPT_TRIGGER: "/pmt:"
+  PROMPT_TRIGGER: "/'"
 }
 
 // UI constants

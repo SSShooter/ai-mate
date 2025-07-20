@@ -23,9 +23,9 @@
 
 #### Acceptance Criteria
 
-1. WHEN 用户在任意输入框中输入"/pmt:"格式的文本 THEN 系统 SHALL 检测到触发条件
+1. WHEN 用户在任意输入框中输入"/'"格式的文本 THEN 系统 SHALL 检测到触发条件
 2. WHEN 检测到触发条件 THEN 系统 SHALL 解析冒号后的key值
-3. WHEN key值匹配用户配置的prompt THEN 系统 SHALL 自动将"/pmt:key"文本替换为对应的prompt内容
+3. WHEN key值匹配用户配置的prompt THEN 系统 SHALL 自动将"/'key"文本替换为对应的prompt内容
 4. WHEN key值不匹配任何配置的prompt THEN 系统 SHALL 保持原文本不变
 
 ### Requirement 3

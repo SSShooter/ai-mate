@@ -52,7 +52,7 @@ export class ChromeStorageService implements IStorageService {
     enableNotifications: true,
     shortcutKeys: {
       quickRecord: "Ctrl+Shift+S",
-      promptTrigger: "/pmt:"
+      promptTrigger: "/'"
     }
   }
 

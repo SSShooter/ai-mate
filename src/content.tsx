@@ -194,7 +194,7 @@ class TextSelectionHandler {
 
 // Prompt replacement engine
 class PromptReplacementEngine {
-  private readonly TRIGGER_PATTERN = "/pmt:"
+  private readonly TRIGGER_PATTERN = "/'"
   private debounceTimer: number | null = null
   private readonly DEBOUNCE_DELAY = 300
 
