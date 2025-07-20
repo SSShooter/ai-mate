@@ -12,7 +12,7 @@
 graph TB
     A[Web Page] --> B[Content Script]
     B --> C[Storage Service]
-    D[Popup UI] --> C
+    D[Side panel UI] --> C
     E[Background Script] --> C
 
     subgraph "Content Script Layer"
@@ -71,7 +71,7 @@ interface PromptReplacementEngine {
 }
 ```
 
-### 2. Popup UI Components
+### 2. Side panel UI Components
 
 #### RecordManager
 

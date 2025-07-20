@@ -40,11 +40,11 @@
     - 添加输入框事件监听
     - _Requirements: 2.1, 2.2, 2.3, 2.4_
 
-- [x] 4. 构建 Popup UI 基础框架
+- [x] 4. 构建 Side panel UI 基础框架
 
   - [x] 4.1 创建主界面布局和导航
 
-    - 实现 Popup 主界面结构
+    - 实现 Side panel 主界面结构
     - 创建记录管理和 Prompt 管理的导航
     - 添加 Tailwind CSS 样式配置
     - _Requirements: 3.1, 4.1_
@@ -95,12 +95,10 @@
 
 - [ ] 7. 集成和优化
 
-  - [ ] 7.1 连接 Content Script 和 Popup UI
+  - [ ] 7.1 连接 Content Script 和 Side panel UI
 
-    - 实现 Content Script 与 Storage Service 的通信
-    - 连接 Popup UI 与后台数据服务
-    - 确保数据同步和状态一致性
-    - _Requirements: 1.2, 1.3, 2.3, 3.3_
+    - 实现用户通过 Content Script 更新记录后，Side panel UI 自动刷新
+    - _Requirements: 1.2_
 
   - [ ] 7.2 添加错误处理和用户体验优化
 
