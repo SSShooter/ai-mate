@@ -16,6 +16,9 @@ class BackgroundService {
     
     // Listen for context menu clicks
     chrome.contextMenus.onClicked.addListener(this.handleContextMenuClick.bind(this))
+    
+    // Listen for action clicks (extension icon)
+    chrome.action.onClicked.addListener(this.handleActionClick.bind(this))
   }
 
   private handleInstalled() {
@@ -87,6 +90,17 @@ class BackgroundService {
       })
     } catch (error) {
       console.error("Failed to send message to content script:", error)
+    }
+  }
+
+  private async handleActionClick(tab: chrome.tabs.Tab) {
+    if (!tab.id) return
+
+    try {
+      // Open the side panel for the current tab
+      await chrome.sidePanel.open({ tabId: tab.id })
+    } catch (error) {
+      console.error("Failed to open side panel:", error)
     }
   }
 }
