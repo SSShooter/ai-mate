@@ -100,15 +100,9 @@
     - 实现用户通过 Content Script 更新记录后，Side panel UI 自动刷新
     - _Requirements: 1.2_
 
-  - [ ] 7.2 添加错误处理和用户体验优化
 
-    - 实现全局错误处理机制
-    - 添加加载状态和用户反馈
-    - 优化界面响应性和交互体验
-    - _Requirements: 1.3, 3.7, 4.4_
-
-  - [ ] 7.3 性能优化和最终调试
-    - 实现数据缓存和懒加载
-    - 添加防抖处理和内存管理
-    - 进行功能完整性验证和 bug 修复
-    - _Requirements: All requirements verification_
+  - [ ] 7.2 用户体验优化和最终调试
+    - record列表只需显示主要内容
+    - record和prompt列表排序为又新到旧
+    - 为搜索功能添加防抖处理
+    - 优化键盘导航和无障碍访问
