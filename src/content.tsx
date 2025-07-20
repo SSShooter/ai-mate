@@ -56,9 +56,28 @@ class TextSelectionHandler {
 
   private handleKeyUp(event: KeyboardEvent) {
     // Handle keyboard shortcuts for quick record
-    if (event.ctrlKey && event.shiftKey && event.key === "S") {
-      event.preventDefault()
-      this.quickSaveToDefault()
+    if (event.altKey && !event.ctrlKey && !event.shiftKey) {
+      let category: RecordCategory | null = null
+      
+      switch (event.key.toLowerCase()) {
+        case "q":
+          category = "inspiration"
+          break
+        case "w":
+          category = "todo"
+          break
+        case "a":
+          category = "principle"
+          break
+        case "s":
+          category = "other"
+          break
+      }
+      
+      if (category) {
+        event.preventDefault()
+        this.quickSaveToCategory(category)
+      }
     }
 
     setTimeout(() => {
@@ -106,15 +125,14 @@ class TextSelectionHandler {
     return true // Keep message channel open for async response
   }
 
-  private async quickSaveToDefault() {
+  private async quickSaveToCategory(category: RecordCategory) {
     if (!this.selectedText) {
       this.showNotification("请先选择要保存的文本", "error")
       return
     }
 
     try {
-      const settings = await storageService.getSettings()
-      await this.saveSelectedText(settings.defaultCategory)
+      await this.saveSelectedText(category)
     } catch (error) {
       console.error("Quick save failed:", error)
       this.showNotification("保存失败，请重试", "error")
