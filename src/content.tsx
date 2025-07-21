@@ -72,6 +72,11 @@ class TextSelectionHandler {
         case "s":
           category = "other"
           break
+        case "c":
+          // Alt+C: Save clipboard content to "other" category
+          event.preventDefault()
+          this.saveClipboardToOther()
+          return
       }
       
       if (category) {
@@ -136,6 +141,47 @@ class TextSelectionHandler {
     } catch (error) {
       console.error("Quick save failed:", error)
       this.showNotification("保存失败，请重试", "error")
+    }
+  }
+
+  private async saveClipboardToOther() {
+    try {
+      // Read clipboard content
+      const clipboardText = await navigator.clipboard.readText()
+
+      if (!clipboardText || clipboardText.trim().length === 0) {
+        this.showNotification("剪贴板内容为空", "error")
+        return
+      }
+
+      const record = createRecord(
+        clipboardText.trim(),
+        "other",
+        window.location.href,
+        document.title || window.location.hostname
+      )
+
+      await storageService.saveRecord(record)
+      this.showNotification("剪贴板内容已保存到其他分组", "success")
+
+      // Notify side panel to refresh immediately
+      try {
+        await chrome.runtime.sendMessage({
+          action: 'recordSaved',
+          record: record,
+          category: "other"
+        })
+      } catch (messageError) {
+        // Side panel might not be open, which is fine
+        console.log('Side panel not available for immediate refresh:', messageError)
+      }
+    } catch (error) {
+      console.error("Failed to save clipboard content:", error)
+      if (error.name === 'NotAllowedError') {
+        this.showNotification("无法访问剪贴板，请确保已授权", "error")
+      } else {
+        this.showNotification("保存剪贴板内容失败，请重试", "error")
+      }
     }
   }
 

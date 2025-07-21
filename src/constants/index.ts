@@ -18,9 +18,10 @@ export const DEFAULT_PROMPT_TRIGGER = "/'"
 // Default shortcut keys
 export const DEFAULT_SHORTCUTS = {
   SAVE_TO_INSPIRATION: "Alt+Q",
-  SAVE_TO_TODO: "Alt+W", 
+  SAVE_TO_TODO: "Alt+W",
   SAVE_TO_PRINCIPLE: "Alt+A",
   SAVE_TO_OTHER: "Alt+S",
+  SAVE_CLIPBOARD_TO_OTHER: "Alt+C",
   PROMPT_TRIGGER: "/'"
 }
 
