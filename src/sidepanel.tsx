@@ -134,8 +134,8 @@ function IndexSidepanel() {
   return (
     <div className="plasmo-w-full plasmo-h-screen plasmo-bg-white plasmo-flex plasmo-flex-col">
       {/* Header */}
-      <div className="plasmo-bg-blue-600 plasmo-text-white plasmo-p-4">
-        <h1 className="plasmo-text-xl plasmo-font-semibold">
+      <div className="plasmo-bg-blue-600 plasmo-text-white plasmo-p-2">
+        <h1 className="plasmo-text-lg plasmo-font-semibold">
           {chrome.i18n.getMessage("appTitle")}
         </h1>
       </div>
@@ -144,7 +144,7 @@ function IndexSidepanel() {
       <div className="plasmo-flex plasmo-border-b plasmo-border-gray-200">
         <button
           onClick={() => setActiveTab("records")}
-          className={`plasmo-flex-1 plasmo-py-4 plasmo-px-6 plasmo-text-base plasmo-font-medium plasmo-transition-colors ${
+          className={`plasmo-flex-1 plasmo-py-2 plasmo-px-3 plasmo-text-sm plasmo-font-medium plasmo-transition-colors ${
             activeTab === "records"
               ? "plasmo-bg-blue-50 plasmo-text-blue-600 plasmo-border-b-2 plasmo-border-blue-600"
               : "plasmo-text-gray-600 hover:plasmo-text-gray-800 hover:plasmo-bg-gray-50"
@@ -153,7 +153,7 @@ function IndexSidepanel() {
         </button>
         <button
           onClick={() => setActiveTab("prompts")}
-          className={`plasmo-flex-1 plasmo-py-4 plasmo-px-6 plasmo-text-base plasmo-font-medium plasmo-transition-colors ${
+          className={`plasmo-flex-1 plasmo-py-2 plasmo-px-3 plasmo-text-sm plasmo-font-medium plasmo-transition-colors ${
             activeTab === "prompts"
               ? "plasmo-bg-blue-50 plasmo-text-blue-600 plasmo-border-b-2 plasmo-border-blue-600"
               : "plasmo-text-gray-600 hover:plasmo-text-gray-800 hover:plasmo-bg-gray-50"
@@ -179,7 +179,7 @@ function IndexSidepanel() {
                 <button
                   key={category}
                   onClick={() => setActiveCategory(category)}
-                  className={`plasmo-flex-1 plasmo-py-3 plasmo-px-4 plasmo-text-sm plasmo-font-medium plasmo-transition-colors ${
+                  className={`plasmo-flex-1 plasmo-py-1.5 plasmo-px-2 plasmo-text-xs plasmo-font-medium plasmo-transition-colors ${
                     activeCategory === category
                       ? "plasmo-bg-white plasmo-text-blue-600 plasmo-border-b-2 plasmo-border-blue-600"
                       : "plasmo-text-gray-600 hover:plasmo-text-gray-800 hover:plasmo-bg-gray-100"
@@ -190,7 +190,7 @@ function IndexSidepanel() {
             </div>
 
             {/* Search Bar */}
-            <div className="plasmo-p-4 plasmo-bg-white plasmo-border-b plasmo-border-gray-200">
+            <div className="plasmo-p-2 plasmo-bg-white plasmo-border-b plasmo-border-gray-200">
               <SearchBar
                 value={searchQuery}
                 onChange={setSearchQuery}
@@ -199,7 +199,7 @@ function IndexSidepanel() {
             </div>
 
             {/* Records Content */}
-            <div className="plasmo-flex-1 plasmo-p-6 plasmo-overflow-y-auto plasmo-bg-gray-50">
+            <div className="plasmo-flex-1 plasmo-p-3 plasmo-overflow-y-auto plasmo-bg-gray-50">
               <RecordList
                 category={activeCategory}
                 searchQuery={searchQuery}
@@ -212,21 +212,18 @@ function IndexSidepanel() {
         {activeTab === "prompts" && (
           <div className="plasmo-h-full plasmo-flex plasmo-flex-col">
             {/* Prompt Header with Add Button */}
-            <div className="plasmo-p-6 plasmo-bg-white plasmo-border-b plasmo-border-gray-200">
+            <div className="plasmo-p-3 plasmo-bg-white plasmo-border-b plasmo-border-gray-200">
               <div className="plasmo-flex plasmo-items-center plasmo-justify-between">
-                <h2 className="plasmo-text-xl plasmo-font-medium plasmo-text-gray-900">
-                  {chrome.i18n.getMessage("promptManagement")}
-                </h2>
                 <button
                   onClick={handleAddPrompt}
-                  className="plasmo-px-4 plasmo-py-2 plasmo-text-base plasmo-font-medium plasmo-text-white plasmo-bg-blue-600 plasmo-border plasmo-border-transparent plasmo-rounded-md hover:plasmo-bg-blue-700 plasmo-transition-colors">
+                  className="plasmo-px-3 plasmo-py-1.5 plasmo-text-sm plasmo-font-medium plasmo-text-white plasmo-bg-blue-600 plasmo-border plasmo-border-transparent plasmo-rounded-md hover:plasmo-bg-blue-700 plasmo-transition-colors">
                   {chrome.i18n.getMessage("addPrompt")}
                 </button>
               </div>
             </div>
 
             {/* Prompt List */}
-            <div className="plasmo-flex-1 plasmo-p-6 plasmo-overflow-y-auto plasmo-bg-gray-50">
+            <div className="plasmo-flex-1 plasmo-p-3 plasmo-overflow-y-auto plasmo-bg-gray-50">
               <PromptList
                 onEdit={handleEditPrompt}
                 onDelete={handleDeletePrompt}

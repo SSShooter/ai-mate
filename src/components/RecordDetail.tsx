@@ -86,7 +86,7 @@ export function RecordDetail({ record, onClose, onUpdate, onDelete }: RecordDeta
 
   return (
     <div className="plasmo-fixed plasmo-inset-0 plasmo-bg-black plasmo-bg-opacity-50 plasmo-flex plasmo-items-center plasmo-justify-center plasmo-z-50">
-      <div className="plasmo-bg-white plasmo-rounded-lg plasmo-shadow-xl plasmo-w-80 plasmo-max-h-96 plasmo-flex plasmo-flex-col">
+      <div className="plasmo-bg-white plasmo-rounded-lg plasmo-shadow-xl plasmo-w-80 plasmo-h-[80vh] plasmo-flex plasmo-flex-col">
         {/* Header */}
         <div className="plasmo-flex plasmo-items-center plasmo-justify-between plasmo-p-4 plasmo-border-b plasmo-border-gray-200">
           <h3 className="plasmo-text-lg plasmo-font-semibold plasmo-text-gray-800">
@@ -114,7 +114,7 @@ export function RecordDetail({ record, onClose, onUpdate, onDelete }: RecordDeta
                 <textarea
                   value={editForm.content}
                   onChange={(e) => setEditForm(prev => ({ ...prev, content: e.target.value }))}
-                  className="plasmo-w-full plasmo-h-24 plasmo-px-3 plasmo-py-2 plasmo-border plasmo-border-gray-300 plasmo-rounded-md plasmo-text-sm plasmo-resize-none focus:plasmo-outline-none focus:plasmo-ring-2 focus:plasmo-ring-blue-500 focus:plasmo-border-transparent"
+                  className="plasmo-w-full plasmo-h-[45vh] plasmo-px-3 plasmo-py-2 plasmo-border plasmo-border-gray-300 plasmo-rounded-md plasmo-text-sm plasmo-resize-none focus:plasmo-outline-none focus:plasmo-ring-2 focus:plasmo-ring-blue-500 focus:plasmo-border-transparent"
                   placeholder={chrome.i18n.getMessage("contentPlaceholder")}
                 />
               </div>
