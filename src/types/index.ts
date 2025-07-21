@@ -23,7 +23,11 @@ export interface Prompt {
 }
 
 export interface ShortcutConfig {
-  quickRecord: string
+  saveToInspiration: string
+  saveToTodo: string
+  saveToPrinciple: string
+  saveToOther: string
+  saveClipboardToOther: string
   promptTrigger: string
 }
 

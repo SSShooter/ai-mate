@@ -5,10 +5,52 @@ import { useEffect } from "react"
 import { CONTEXT_MENU_IDS, SUCCESS_MESSAGES } from "~constants"
 import { storageService } from "~services/storage"
 import { createRecord } from "~services/utils"
-import type { RecordCategory } from "~types"
+import type { RecordCategory, ShortcutConfig } from "~types"
 
 export const config: PlasmoCSConfig = {
   matches: ["<all_urls>"]
+}
+
+// Utility function to parse shortcut string
+function parseShortcut(shortcut: string): {
+  altKey: boolean
+  ctrlKey: boolean
+  shiftKey: boolean
+  key: string
+} {
+  const parts = shortcut.toLowerCase().split('+')
+  const result = {
+    altKey: false,
+    ctrlKey: false,
+    shiftKey: false,
+    key: ''
+  }
+
+  for (const part of parts) {
+    const trimmed = part.trim()
+    if (trimmed === 'alt') {
+      result.altKey = true
+    } else if (trimmed === 'ctrl') {
+      result.ctrlKey = true
+    } else if (trimmed === 'shift') {
+      result.shiftKey = true
+    } else {
+      result.key = trimmed
+    }
+  }
+
+  return result
+}
+
+// Utility function to check if keyboard event matches shortcut
+function matchesShortcut(event: KeyboardEvent, shortcut: string): boolean {
+  const parsed = parseShortcut(shortcut)
+  return (
+    event.altKey === parsed.altKey &&
+    event.ctrlKey === parsed.ctrlKey &&
+    event.shiftKey === parsed.shiftKey &&
+    event.key.toLowerCase() === parsed.key.toLowerCase()
+  )
 }
 
 /**
@@ -34,18 +76,40 @@ export const getStyle = (): HTMLStyleElement => {
 class TextSelectionHandler {
   private selectedText: string = ""
   private selectionPosition: { x: number; y: number } = { x: 0, y: 0 }
+  private shortcuts: ShortcutConfig | null = null
 
   constructor() {
     this.init()
   }
 
-  private init() {
+  private async init() {
+    // Load shortcuts from settings
+    await this.loadShortcuts()
+
     // Listen for text selection
     document.addEventListener("mouseup", this.handleMouseUp.bind(this))
     document.addEventListener("keyup", this.handleKeyUp.bind(this))
 
     // Listen for context menu messages from background script
     chrome.runtime.onMessage.addListener(this.handleMessage.bind(this))
+  }
+
+  private async loadShortcuts() {
+    try {
+      const settings = await storageService.getSettings()
+      this.shortcuts = settings.shortcutKeys
+    } catch (error) {
+      console.error("Failed to load shortcuts:", error)
+      // Use default shortcuts if loading fails
+      this.shortcuts = {
+        saveToInspiration: "Alt+Q",
+        saveToTodo: "Alt+W",
+        saveToPrinciple: "Alt+A",
+        saveToOther: "Alt+S",
+        saveClipboardToOther: "Alt+C",
+        promptTrigger: "/'"
+      }
+    }
   }
 
   private handleMouseUp(event: MouseEvent) {
@@ -56,33 +120,43 @@ class TextSelectionHandler {
 
   private handleKeyUp(event: KeyboardEvent) {
     // Handle keyboard shortcuts for quick record
-    if (event.altKey && !event.ctrlKey && !event.shiftKey) {
-      let category: RecordCategory | null = null
-      
-      switch (event.key.toLowerCase()) {
-        case "q":
-          category = "inspiration"
-          break
-        case "w":
-          category = "todo"
-          break
-        case "a":
-          category = "principle"
-          break
-        case "s":
-          category = "other"
-          break
-        case "c":
-          // Alt+C: Save clipboard content to "other" category
-          event.preventDefault()
-          this.saveClipboardToOther()
-          return
-      }
-      
-      if (category) {
-        event.preventDefault()
-        this.quickSaveToCategory(category)
-      }
+    if (!this.shortcuts) {
+      // Shortcuts not loaded yet, skip
+      setTimeout(() => {
+        this.detectTextSelection()
+      }, 10)
+      return
+    }
+
+    // Check each shortcut
+    if (matchesShortcut(event, this.shortcuts.saveToInspiration)) {
+      event.preventDefault()
+      this.quickSaveToCategory("inspiration")
+      return
+    }
+
+    if (matchesShortcut(event, this.shortcuts.saveToTodo)) {
+      event.preventDefault()
+      this.quickSaveToCategory("todo")
+      return
+    }
+
+    if (matchesShortcut(event, this.shortcuts.saveToPrinciple)) {
+      event.preventDefault()
+      this.quickSaveToCategory("principle")
+      return
+    }
+
+    if (matchesShortcut(event, this.shortcuts.saveToOther)) {
+      event.preventDefault()
+      this.quickSaveToCategory("other")
+      return
+    }
+
+    if (matchesShortcut(event, this.shortcuts.saveClipboardToOther)) {
+      event.preventDefault()
+      this.saveClipboardToOther()
+      return
     }
 
     setTimeout(() => {
@@ -270,7 +344,7 @@ class TextSelectionHandler {
 
 // Prompt replacement engine
 class PromptReplacementEngine {
-  private readonly TRIGGER_PATTERN = "/'"
+  private triggerPattern: string = "/'"
   private debounceTimer: number | null = null
   private readonly DEBOUNCE_DELAY = 300
 
@@ -278,9 +352,23 @@ class PromptReplacementEngine {
     this.init()
   }
 
-  private init() {
+  private async init() {
+    // Load trigger pattern from settings
+    await this.loadTriggerPattern()
+
     // Listen for input events on all input elements
     this.attachInputListeners()
+  }
+
+  private async loadTriggerPattern() {
+    try {
+      const settings = await storageService.getSettings()
+      this.triggerPattern = settings.shortcutKeys.promptTrigger
+    } catch (error) {
+      console.error("Failed to load trigger pattern:", error)
+      // Use default trigger pattern if loading fails
+      this.triggerPattern = "/'"
+    }
   }
 
   private attachInputListeners() {
@@ -379,7 +467,7 @@ class PromptReplacementEngine {
   }
 
   private detectTriggerPattern(text: string): boolean {
-    return text.includes(this.TRIGGER_PATTERN)
+    return text.includes(this.triggerPattern)
   }
 
   private findTriggerMatch(text: string): {
@@ -388,13 +476,13 @@ class PromptReplacementEngine {
     startIndex: number
     endIndex: number
   } | null {
-    const triggerIndex = text.lastIndexOf(this.TRIGGER_PATTERN)
+    const triggerIndex = text.lastIndexOf(this.triggerPattern)
     if (triggerIndex === -1) {
       return null
     }
 
     const afterTrigger = text.substring(
-      triggerIndex + this.TRIGGER_PATTERN.length
+      triggerIndex + this.triggerPattern.length
     )
 
     // Extract key until whitespace or end of string
@@ -404,7 +492,7 @@ class PromptReplacementEngine {
     }
 
     const key = keyMatch[1]
-    const fullMatch = this.TRIGGER_PATTERN + key
+    const fullMatch = this.triggerPattern + key
 
     return {
       fullMatch,

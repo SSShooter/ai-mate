@@ -51,7 +51,11 @@ export class ChromeStorageService implements IStorageService {
     defaultCategory: "other",
     enableNotifications: true,
     shortcutKeys: {
-      quickRecord: "Ctrl+Shift+S",
+      saveToInspiration: "Alt+Q",
+      saveToTodo: "Alt+W",
+      saveToPrinciple: "Alt+A",
+      saveToOther: "Alt+S",
+      saveClipboardToOther: "Alt+C",
       promptTrigger: "/'"
     }
   }
