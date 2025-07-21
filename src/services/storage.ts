@@ -110,12 +110,14 @@ export class ChromeStorageService implements IStorageService {
       const result = await chrome.storage.local.get(this.STORAGE_KEYS.RECORDS)
       const records = result[this.STORAGE_KEYS.RECORDS] || []
 
-      // Ensure timestamps are numbers with validation
-      return records.map((record: any) => ({
-        ...record,
-        createdAt: record.createdAt || Date.now(),
-        updatedAt: record.updatedAt || Date.now()
-      }))
+      // Ensure timestamps are numbers with validation and filter out deleted records
+      return records
+        .filter((record: any) => !record.deleted)
+        .map((record: any) => ({
+          ...record,
+          createdAt: record.createdAt || Date.now(),
+          updatedAt: record.updatedAt || Date.now()
+        }))
     } catch (error) {
       throw new Error(`Failed to get all records: ${error.message}`)
     }
@@ -129,11 +131,19 @@ export class ChromeStorageService implements IStorageService {
     try {
       const result = await chrome.storage.local.get(this.STORAGE_KEYS.RECORDS)
       const records = result[this.STORAGE_KEYS.RECORDS] || []
-      const filteredRecords = records.filter(
-        (record: any) => record.id !== recordId
-      )
+      const updatedRecords = records.map((record: any) => {
+        if (record.id === recordId) {
+          return {
+            ...record,
+            deleted: true,
+            deletedAt: Date.now(),
+            updatedAt: Date.now()
+          }
+        }
+        return record
+      })
       await chrome.storage.local.set({
-        [this.STORAGE_KEYS.RECORDS]: filteredRecords
+        [this.STORAGE_KEYS.RECORDS]: updatedRecords
       })
     } catch (error) {
       throw new Error(`Failed to delete record: ${error.message}`)
@@ -170,12 +180,14 @@ export class ChromeStorageService implements IStorageService {
       const result = await chrome.storage.local.get(this.STORAGE_KEYS.PROMPTS)
       const prompts = result[this.STORAGE_KEYS.PROMPTS] || []
 
-      // Ensure timestamps are numbers with validation
-      return prompts.map((prompt: any) => ({
-        ...prompt,
-        createdAt: prompt.createdAt || Date.now(),
-        updatedAt: prompt.updatedAt || Date.now()
-      }))
+      // Ensure timestamps are numbers with validation and filter out deleted prompts
+      return prompts
+        .filter((prompt: any) => !prompt.deleted)
+        .map((prompt: any) => ({
+          ...prompt,
+          createdAt: prompt.createdAt || Date.now(),
+          updatedAt: prompt.updatedAt || Date.now()
+        }))
     } catch (error) {
       throw new Error(`Failed to get all prompts: ${error.message}`)
     }
@@ -196,10 +208,21 @@ export class ChromeStorageService implements IStorageService {
 
   async deletePrompt(promptId: string): Promise<void> {
     try {
-      const prompts = await this.getAllPrompts()
-      const filteredPrompts = prompts.filter((prompt) => prompt.id !== promptId)
+      const result = await chrome.storage.local.get(this.STORAGE_KEYS.PROMPTS)
+      const prompts = result[this.STORAGE_KEYS.PROMPTS] || []
+      const updatedPrompts = prompts.map((prompt: any) => {
+        if (prompt.id === promptId) {
+          return {
+            ...prompt,
+            deleted: true,
+            deletedAt: Date.now(),
+            updatedAt: Date.now()
+          }
+        }
+        return prompt
+      })
       await chrome.storage.local.set({
-        [this.STORAGE_KEYS.PROMPTS]: filteredPrompts
+        [this.STORAGE_KEYS.PROMPTS]: updatedPrompts
       })
     } catch (error) {
       throw new Error(`Failed to delete prompt: ${error.message}`)
@@ -262,8 +285,41 @@ export class ChromeStorageService implements IStorageService {
     }
   }
 
+  // 新增方法：导出所有数据（包括已删除的项目，用于同步）
+  async exportAllDataForSync(): Promise<StorageSchema> {
+    try {
+      const [recordsResult, promptsResult, settings] = await Promise.all([
+        chrome.storage.local.get(this.STORAGE_KEYS.RECORDS),
+        chrome.storage.local.get(this.STORAGE_KEYS.PROMPTS),
+        this.getSettings()
+      ])
+
+      const allRecords = recordsResult[this.STORAGE_KEYS.RECORDS] || []
+      const allPrompts = promptsResult[this.STORAGE_KEYS.PROMPTS] || []
+
+      // 确保时间戳正确，但不过滤已删除的项目
+      const records = allRecords.map((record: any) => ({
+        ...record,
+        createdAt: record.createdAt || Date.now(),
+        updatedAt: record.updatedAt || Date.now()
+      }))
+
+      const prompts = allPrompts.map((prompt: any) => ({
+        ...prompt,
+        createdAt: prompt.createdAt || Date.now(),
+        updatedAt: prompt.updatedAt || Date.now()
+      }))
+
+      return { records, prompts, settings }
+    } catch (error) {
+      throw new Error(`Failed to export all data for sync: ${error.message}`)
+    }
+  }
+
   async importData(data: StorageSchema): Promise<void> {
     try {
+      // 直接导入所有数据，包括删除标记
+      // 这样可以确保删除状态在设备间正确同步
       await chrome.storage.local.set({
         [this.STORAGE_KEYS.RECORDS]: data.records,
         [this.STORAGE_KEYS.PROMPTS]: data.prompts,
@@ -271,6 +327,34 @@ export class ChromeStorageService implements IStorageService {
       })
     } catch (error) {
       throw new Error(`Failed to import data: ${error.message}`)
+    }
+  }
+
+  // 清理已删除的项目（删除超过30天的项目）
+  async cleanupDeletedItems(): Promise<void> {
+    try {
+      const thirtyDaysAgo = Date.now() - (30 * 24 * 60 * 60 * 1000)
+
+      // 清理记录
+      const recordsResult = await chrome.storage.local.get(this.STORAGE_KEYS.RECORDS)
+      const allRecords = recordsResult[this.STORAGE_KEYS.RECORDS] || []
+      const cleanedRecords = allRecords.filter((record: any) => {
+        return !record.deleted || (record.deletedAt && record.deletedAt > thirtyDaysAgo)
+      })
+
+      // 清理提示词
+      const promptsResult = await chrome.storage.local.get(this.STORAGE_KEYS.PROMPTS)
+      const allPrompts = promptsResult[this.STORAGE_KEYS.PROMPTS] || []
+      const cleanedPrompts = allPrompts.filter((prompt: any) => {
+        return !prompt.deleted || (prompt.deletedAt && prompt.deletedAt > thirtyDaysAgo)
+      })
+
+      await chrome.storage.local.set({
+        [this.STORAGE_KEYS.RECORDS]: cleanedRecords,
+        [this.STORAGE_KEYS.PROMPTS]: cleanedPrompts
+      })
+    } catch (error) {
+      console.error('Failed to cleanup deleted items:', error)
     }
   }
 }

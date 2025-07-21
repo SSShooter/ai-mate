@@ -8,6 +8,7 @@ import { PromptList } from "~components/PromptList"
 import { RecordDetail } from "~components/RecordDetail"
 import { RecordList } from "~components/RecordList"
 import { SearchBar } from "~components/SearchBar"
+import { SyncStatus } from "~components/SyncStatus"
 import { storageService } from "~services/storage"
 import type { Prompt, Record } from "~types"
 
@@ -135,9 +136,19 @@ function IndexSidepanel() {
     <div className="w-full h-screen bg-white flex flex-col">
       {/* Header */}
       <div className="bg-blue-600 text-white p-2">
-        <h1 className="text-lg font-semibold">
-          {chrome.i18n.getMessage("appTitle")}
-        </h1>
+        <div className="flex items-center justify-between">
+          <h1 className="text-lg font-semibold">
+            {chrome.i18n.getMessage("appTitle")}
+          </h1>
+        </div>
+      </div>
+
+      {/* Sync Status Bar */}
+      <div className="border-b border-gray-200">
+        <SyncStatus onSyncComplete={() => {
+          setRefreshTrigger(prev => prev + 1)
+          setPromptRefreshTrigger(prev => prev + 1)
+        }} />
       </div>
 
       {/* Navigation Tabs */}

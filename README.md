@@ -1,33 +1,31 @@
-This is a [Plasmo extension](https://docs.plasmo.com/) project bootstrapped with [`plasmo init`](https://www.npmjs.com/package/plasmo).
+# AI Mate - Chrome 浏览器插件
 
-## Getting Started
+AI Mate 是一个功能强大的 Chrome 浏览器插件，帮助你快速保存和管理网页内容、提示词，并支持跨设备数据同步。
 
-First, run the development server:
+## ✨ 主要功能
 
-```bash
-pnpm dev
-# or
-npm run dev
-```
+- 📝 **快速记录**: 保存网页内容到不同分类（灵感、待办、原则、其他）
+- 🤖 **提示词管理**: 创建和管理 AI 提示词模板
+- 🔄 **数据同步**: 基于 Cloudflare Worker + KV 的跨设备同步
+- ⌨️ **快捷键支持**: 自定义快捷键快速操作
+- 🎨 **直观界面**: 简洁易用的侧边栏界面
 
-Open your browser and load the appropriate development build. For example, if you are developing for the chrome browser, using manifest v3, use: `build/chrome-mv3-dev`.
+## 🚀 新功能：数据同步
 
-You can start editing the popup by modifying `popup.tsx`. It should auto-update as you make changes. To add an options page, simply add a `options.tsx` file to the root of the project, with a react component default exported. Likewise to add a content page, add a `content.ts` file to the root of the project, importing some module and do some logic, then reload the extension on your browser.
+现在支持跨设备数据同步！通过 Cloudflare Worker + KV 存储，你可以：
 
-For further guidance, [visit our Documentation](https://docs.plasmo.com/)
+- ☁️ **免费部署**: 基于 Cloudflare 免费套餐
+- 🔐 **安全可靠**: API Key 认证 + HTTPS 加密
+- 🔄 **智能合并**: Last-Write-Wins 策略自动解决冲突
+- ⚡ **自动同步**: 支持定时自动同步
+- 📱 **多设备**: 在所有设备间保持数据一致
 
-## Making production build
+### 快速开始同步功能
 
-Run the following:
+1. **部署 Worker**: 复制 `docs/cloudflare-worker-template.js` 到 Cloudflare Worker
+2. **创建 KV**: 创建名为 `AI_MATE_SYNC` 的 KV 命名空间并绑定
+3. **配置插件**: 在插件中填入 Worker URL 和 API Key
+4. **开始同步**: 点击同步按钮，享受跨设备数据同步
 
-```bash
-pnpm build
-# or
-npm run build
-```
+详细设置指南请查看 [同步功能设置指南](docs/sync-setup-guide.md)
 
-This should create a production bundle for your extension, ready to be zipped and published to the stores.
-
-## Submit to the webstores
-
-The easiest way to deploy your Plasmo extension is to use the built-in [bpp](https://bpp.browser.market) GitHub action. Prior to using this action however, make sure to build your extension and upload the first version to the store to establish the basic credentials. Then, simply follow [this setup instruction](https://docs.plasmo.com/framework/workflows/submit) and you should be on your way for automated submission!

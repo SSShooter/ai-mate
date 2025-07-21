@@ -10,6 +10,8 @@ export interface Record {
   sourceTitle: string
   createdAt: number
   updatedAt: number
+  deleted?: boolean
+  deletedAt?: number
 }
 
 export interface Prompt {
@@ -20,6 +22,8 @@ export interface Prompt {
   description?: string
   createdAt: number
   updatedAt: number
+  deleted?: boolean
+  deletedAt?: number
 }
 
 export interface ShortcutConfig {
@@ -61,4 +65,53 @@ export interface AppError {
 export interface Position {
   x: number
   y: number
+}
+
+// Sync related types
+export interface SyncConfig {
+  workerUrl: string
+  apiKey: string
+  enabled: boolean
+  autoSync: boolean
+  syncInterval: number // minutes
+}
+
+export const SyncStatus = {
+  IDLE: "idle",
+  SYNCING: "syncing",
+  SUCCESS: "success",
+  ERROR: "error",
+  CONFLICT: "conflict"
+} as const
+
+export type SyncStatusType = typeof SyncStatus[keyof typeof SyncStatus]
+
+export interface SyncState {
+  status: SyncStatusType
+  lastSyncTime: number | null
+  lastErrorMessage: string | null
+  isConfigured: boolean
+}
+
+export interface SyncData {
+  records: Record[]
+  prompts: Prompt[]
+  settings: AppSettings
+  lastSyncTime: number | null
+}
+
+export interface ConflictResolution {
+  type: 'local' | 'remote' | 'merge'
+  recordId?: string
+  promptId?: string
+}
+
+export interface SyncResult {
+  success: boolean
+  conflicts?: {
+    records: Record[]
+    prompts: Prompt[]
+  }
+  error?: string
+  lastSyncTime: number
 }
