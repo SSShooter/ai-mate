@@ -114,18 +114,18 @@ export function PromptForm({ prompt, onSave, onCancel }: PromptFormProps) {
   }
 
   return (
-    <div className="plasmo-fixed plasmo-inset-0 plasmo-bg-black plasmo-bg-opacity-50 plasmo-flex plasmo-items-center plasmo-justify-center plasmo-z-50">
-      <div className="plasmo-bg-white plasmo-rounded-lg plasmo-shadow-lg plasmo-w-full plasmo-max-w-md plasmo-mx-4 plasmo-max-h-[90vh] plasmo-overflow-y-auto">
-        <div className="plasmo-p-6">
-          <div className="plasmo-flex plasmo-items-center plasmo-justify-between plasmo-mb-4">
-            <h2 className="plasmo-text-lg plasmo-font-semibold plasmo-text-gray-900">
+    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+      <div className="bg-white rounded-lg shadow-lg w-full max-w-md mx-4 max-h-[90vh] overflow-y-auto">
+        <div className="p-6">
+          <div className="flex items-center justify-between mb-4">
+            <h2 className="text-lg font-semibold text-gray-900">
               {prompt ? chrome.i18n.getMessage("editPrompt") : chrome.i18n.getMessage("addPrompt")}
             </h2>
             <button
               onClick={onCancel}
-              className="plasmo-text-gray-400 hover:plasmo-text-gray-600 plasmo-transition-colors">
+              className="text-gray-400 hover:text-gray-600 transition-colors">
               <svg
-                className="plasmo-w-6 plasmo-h-6"
+                className="w-6 h-6"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24">
@@ -139,51 +139,51 @@ export function PromptForm({ prompt, onSave, onCancel }: PromptFormProps) {
             </button>
           </div>
 
-          <form onSubmit={handleSubmit} className="plasmo-space-y-4">
+          <form onSubmit={handleSubmit} className="space-y-4">
             {/* Key Field */}
             <div>
-              <label className="plasmo-block plasmo-text-sm plasmo-font-medium plasmo-text-gray-700 plasmo-mb-1">
+              <label className="block text-sm font-medium text-gray-700 mb-1">
                 {chrome.i18n.getMessage("keyLabel")}
               </label>
               <input
                 type="text"
                 value={formData.key}
                 onChange={(e) => handleInputChange("key", e.target.value)}
-                className={`plasmo-w-full plasmo-px-3 plasmo-py-2 plasmo-border plasmo-rounded-md plasmo-text-sm plasmo-transition-colors ${
+                className={`w-full px-3 py-2 border rounded-md text-sm transition-colors ${
                   errors.key
-                    ? "plasmo-border-red-300 plasmo-bg-red-50"
-                    : "plasmo-border-gray-300 focus:plasmo-border-blue-500 focus:plasmo-ring-1 focus:plasmo-ring-blue-500"
+                    ? "border-red-300 bg-red-50"
+                    : "border-gray-300 focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
                 }`}
                 placeholder={chrome.i18n.getMessage("keyPlaceholder")}
               />
               {errors.key && (
-                <p className="plasmo-text-red-500 plasmo-text-xs plasmo-mt-1">
+                <p className="text-red-500 text-xs mt-1">
                   {errors.key}
                 </p>
               )}
-              <p className="plasmo-text-gray-500 plasmo-text-xs plasmo-mt-1">
+              <p className="text-gray-500 text-xs mt-1">
                 {chrome.i18n.getMessage("keyHelp")}
               </p>
             </div>
 
             {/* Title Field */}
             <div>
-              <label className="plasmo-block plasmo-text-sm plasmo-font-medium plasmo-text-gray-700 plasmo-mb-1">
+              <label className="block text-sm font-medium text-gray-700 mb-1">
                 {chrome.i18n.getMessage("titleLabel")}
               </label>
               <input
                 type="text"
                 value={formData.title}
                 onChange={(e) => handleInputChange("title", e.target.value)}
-                className={`plasmo-w-full plasmo-px-3 plasmo-py-2 plasmo-border plasmo-rounded-md plasmo-text-sm plasmo-transition-colors ${
+                className={`w-full px-3 py-2 border rounded-md text-sm transition-colors ${
                   errors.title
-                    ? "plasmo-border-red-300 plasmo-bg-red-50"
-                    : "plasmo-border-gray-300 focus:plasmo-border-blue-500 focus:plasmo-ring-1 focus:plasmo-ring-blue-500"
+                    ? "border-red-300 bg-red-50"
+                    : "border-gray-300 focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
                 }`}
                 placeholder={chrome.i18n.getMessage("titlePlaceholder")}
               />
               {errors.title && (
-                <p className="plasmo-text-red-500 plasmo-text-xs plasmo-mt-1">
+                <p className="text-red-500 text-xs mt-1">
                   {errors.title}
                 </p>
               )}
@@ -191,7 +191,7 @@ export function PromptForm({ prompt, onSave, onCancel }: PromptFormProps) {
 
             {/* Description Field */}
             <div>
-              <label className="plasmo-block plasmo-text-sm plasmo-font-medium plasmo-text-gray-700 plasmo-mb-1">
+              <label className="block text-sm font-medium text-gray-700 mb-1">
                 {chrome.i18n.getMessage("descriptionLabel")}
               </label>
               <input
@@ -200,29 +200,29 @@ export function PromptForm({ prompt, onSave, onCancel }: PromptFormProps) {
                 onChange={(e) =>
                   handleInputChange("description", e.target.value)
                 }
-                className="plasmo-w-full plasmo-px-3 plasmo-py-2 plasmo-border plasmo-border-gray-300 plasmo-rounded-md plasmo-text-sm focus:plasmo-border-blue-500 focus:plasmo-ring-1 focus:plasmo-ring-blue-500 plasmo-transition-colors"
+                className="w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-colors"
                 placeholder={chrome.i18n.getMessage("descriptionPlaceholder")}
               />
             </div>
 
             {/* Content Field */}
             <div>
-              <label className="plasmo-block plasmo-text-sm plasmo-font-medium plasmo-text-gray-700 plasmo-mb-1">
+              <label className="block text-sm font-medium text-gray-700 mb-1">
                 {chrome.i18n.getMessage("contentLabel")}
               </label>
               <textarea
                 value={formData.content}
                 onChange={(e) => handleInputChange("content", e.target.value)}
                 rows={4}
-                className={`plasmo-w-full plasmo-px-3 plasmo-py-2 plasmo-border plasmo-rounded-md plasmo-text-sm plasmo-transition-colors plasmo-resize-none ${
+                className={`w-full px-3 py-2 border rounded-md text-sm transition-colors resize-none ${
                   errors.content
-                    ? "plasmo-border-red-300 plasmo-bg-red-50"
-                    : "plasmo-border-gray-300 focus:plasmo-border-blue-500 focus:plasmo-ring-1 focus:plasmo-ring-blue-500"
+                    ? "border-red-300 bg-red-50"
+                    : "border-gray-300 focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
                 }`}
                 placeholder={chrome.i18n.getMessage("contentPlaceholder")}
               />
               {errors.content && (
-                <p className="plasmo-text-red-500 plasmo-text-xs plasmo-mt-1">
+                <p className="text-red-500 text-xs mt-1">
                   {errors.content}
                 </p>
               )}
@@ -230,23 +230,23 @@ export function PromptForm({ prompt, onSave, onCancel }: PromptFormProps) {
 
             {/* Submit Error */}
             {errors.submit && (
-              <div className="plasmo-text-red-500 plasmo-text-sm plasmo-text-center">
+              <div className="text-red-500 text-sm text-center">
                 {errors.submit}
               </div>
             )}
 
             {/* Action Buttons */}
-            <div className="plasmo-flex plasmo-gap-3 plasmo-pt-4">
+            <div className="flex gap-3 pt-4">
               <button
                 type="button"
                 onClick={onCancel}
-                className="plasmo-flex-1 plasmo-px-4 plasmo-py-2 plasmo-text-sm plasmo-font-medium plasmo-text-gray-700 plasmo-bg-gray-100 plasmo-border plasmo-border-gray-300 plasmo-rounded-md hover:plasmo-bg-gray-200 plasmo-transition-colors">
+                className="flex-1 px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 border border-gray-300 rounded-md hover:bg-gray-200 transition-colors">
                 {chrome.i18n.getMessage("cancel")}
               </button>
               <button
                 type="submit"
                 disabled={saving}
-                className="plasmo-flex-1 plasmo-px-4 plasmo-py-2 plasmo-text-sm plasmo-font-medium plasmo-text-white plasmo-bg-blue-600 plasmo-border plasmo-border-transparent plasmo-rounded-md hover:plasmo-bg-blue-700 disabled:plasmo-opacity-50 disabled:plasmo-cursor-not-allowed plasmo-transition-colors">
+                className="flex-1 px-4 py-2 text-sm font-medium text-white bg-blue-600 border border-transparent rounded-md hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors">
                 {saving ? chrome.i18n.getMessage("saving") : chrome.i18n.getMessage("save")}
               </button>
             </div>

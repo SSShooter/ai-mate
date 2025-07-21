@@ -85,49 +85,49 @@ export function RecordDetail({ record, onClose, onUpdate, onDelete }: RecordDeta
   }
 
   return (
-    <div className="plasmo-fixed plasmo-inset-0 plasmo-bg-black plasmo-bg-opacity-50 plasmo-flex plasmo-items-center plasmo-justify-center plasmo-z-50">
-      <div className="plasmo-bg-white plasmo-rounded-lg plasmo-shadow-xl plasmo-w-80 plasmo-h-[80vh] plasmo-flex plasmo-flex-col">
+    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+      <div className="bg-white rounded-lg shadow-xl w-80 h-[80vh] flex flex-col">
         {/* Header */}
-        <div className="plasmo-flex plasmo-items-center plasmo-justify-between plasmo-p-4 plasmo-border-b plasmo-border-gray-200">
-          <h3 className="plasmo-text-lg plasmo-font-semibold plasmo-text-gray-800">
+        <div className="flex items-center justify-between p-4 border-b border-gray-200">
+          <h3 className="text-lg font-semibold text-gray-800">
             {chrome.i18n.getMessage("recordDetail")}
           </h3>
           <button
             onClick={onClose}
-            className="plasmo-text-gray-400 hover:plasmo-text-gray-600 plasmo-transition-colors"
+            className="text-gray-400 hover:text-gray-600 transition-colors"
           >
-            <svg className="plasmo-w-5 plasmo-h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
             </svg>
           </button>
         </div>
 
         {/* Content */}
-        <div className="plasmo-flex-1 plasmo-p-4 plasmo-overflow-y-auto">
+        <div className="flex-1 p-4 overflow-y-auto">
           {isEditing ? (
-            <div className="plasmo-space-y-4">
+            <div className="space-y-4">
               {/* Content Editor */}
               <div>
-                <label className="plasmo-block plasmo-text-sm plasmo-font-medium plasmo-text-gray-700 plasmo-mb-2">
+                <label className="block text-sm font-medium text-gray-700 mb-2">
                   {chrome.i18n.getMessage("recordContent")}
                 </label>
                 <textarea
                   value={editForm.content}
                   onChange={(e) => setEditForm(prev => ({ ...prev, content: e.target.value }))}
-                  className="plasmo-w-full plasmo-h-[45vh] plasmo-px-3 plasmo-py-2 plasmo-border plasmo-border-gray-300 plasmo-rounded-md plasmo-text-sm plasmo-resize-none focus:plasmo-outline-none focus:plasmo-ring-2 focus:plasmo-ring-blue-500 focus:plasmo-border-transparent"
+                  className="w-full h-[45vh] px-3 py-2 border border-gray-300 rounded-md text-sm resize-none focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                   placeholder={chrome.i18n.getMessage("contentPlaceholder")}
                 />
               </div>
 
               {/* Category Selector */}
               <div>
-                <label className="plasmo-block plasmo-text-sm plasmo-font-medium plasmo-text-gray-700 plasmo-mb-2">
+                <label className="block text-sm font-medium text-gray-700 mb-2">
                   {chrome.i18n.getMessage("category")}
                 </label>
                 <select
                   value={editForm.category}
                   onChange={(e) => setEditForm(prev => ({ ...prev, category: e.target.value as RecordCategory }))}
-                  className="plasmo-w-full plasmo-px-3 plasmo-py-2 plasmo-border plasmo-border-gray-300 plasmo-rounded-md plasmo-text-sm focus:plasmo-outline-none focus:plasmo-ring-2 focus:plasmo-ring-blue-500 focus:plasmo-border-transparent"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                 >
                   {CATEGORY_OPTIONS.map(category => (
                     <option key={category} value={category}>
@@ -138,30 +138,30 @@ export function RecordDetail({ record, onClose, onUpdate, onDelete }: RecordDeta
               </div>
 
               {error && (
-                <div className="plasmo-text-sm plasmo-text-red-500 plasmo-bg-red-50 plasmo-p-2 plasmo-rounded">
+                <div className="text-sm text-red-500 bg-red-50 p-2 rounded">
                   {error}
                 </div>
               )}
             </div>
           ) : (
-            <div className="plasmo-space-y-4">
+            <div className="space-y-4">
               {/* Content Display */}
               <div>
-                <label className="plasmo-block plasmo-text-sm plasmo-font-medium plasmo-text-gray-700 plasmo-mb-2">
+                <label className="block text-sm font-medium text-gray-700 mb-2">
                   {chrome.i18n.getMessage("recordContent")}
                 </label>
-                <div className="plasmo-text-sm plasmo-text-gray-800 plasmo-leading-relaxed plasmo-bg-gray-50 plasmo-p-3 plasmo-rounded-md">
+                <div className="text-sm text-gray-800 leading-relaxed bg-gray-50 p-3 rounded-md">
                   {record.content}
                 </div>
               </div>
 
               {/* Category Display */}
               <div>
-                <label className="plasmo-block plasmo-text-sm plasmo-font-medium plasmo-text-gray-700 plasmo-mb-2">
+                <label className="block text-sm font-medium text-gray-700 mb-2">
                   {chrome.i18n.getMessage("category")}
                 </label>
-                <div className="plasmo-text-sm plasmo-text-gray-800">
-                  <span className="plasmo-inline-flex plasmo-items-center plasmo-px-2 plasmo-py-1 plasmo-rounded-full plasmo-text-xs plasmo-font-medium plasmo-bg-blue-100 plasmo-text-blue-800">
+                <div className="text-sm text-gray-800">
+                  <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
                     {getCategoryLabel(record.category)}
                   </span>
                 </div>
@@ -169,21 +169,21 @@ export function RecordDetail({ record, onClose, onUpdate, onDelete }: RecordDeta
 
               {/* Source Info */}
               <div>
-                <label className="plasmo-block plasmo-text-sm plasmo-font-medium plasmo-text-gray-700 plasmo-mb-2">
+                <label className="block text-sm font-medium text-gray-700 mb-2">
                   {chrome.i18n.getMessage("sourceInfo")}
                 </label>
-                <div className="plasmo-space-y-2 plasmo-text-sm plasmo-text-gray-600">
-                  <div className="plasmo-flex plasmo-items-start plasmo-space-x-2">
-                    <span className="plasmo-text-gray-400">📄</span>
-                    <span className="plasmo-break-all">{record.sourceTitle}</span>
+                <div className="space-y-2 text-sm text-gray-600">
+                  <div className="flex items-start space-x-2">
+                    <span className="text-gray-400">📄</span>
+                    <span className="break-all">{record.sourceTitle}</span>
                   </div>
-                  <div className="plasmo-flex plasmo-items-start plasmo-space-x-2">
-                    <span className="plasmo-text-gray-400">🔗</span>
+                  <div className="flex items-start space-x-2">
+                    <span className="text-gray-400">🔗</span>
                     <a 
                       href={record.sourceUrl} 
                       target="_blank" 
                       rel="noopener noreferrer"
-                      className="plasmo-text-blue-600 hover:plasmo-text-blue-800 plasmo-break-all plasmo-underline"
+                      className="text-blue-600 hover:text-blue-800 break-all underline"
                     >
                       {record.sourceUrl}
                     </a>
@@ -193,10 +193,10 @@ export function RecordDetail({ record, onClose, onUpdate, onDelete }: RecordDeta
 
               {/* Timestamps */}
               <div>
-                <label className="plasmo-block plasmo-text-sm plasmo-font-medium plasmo-text-gray-700 plasmo-mb-2">
+                <label className="block text-sm font-medium text-gray-700 mb-2">
                   {chrome.i18n.getMessage("timeInfo")}
                 </label>
-                <div className="plasmo-space-y-1 plasmo-text-xs plasmo-text-gray-500">
+                <div className="space-y-1 text-xs text-gray-500">
                   <div>{chrome.i18n.getMessage("createdAt", formatDate(record.createdAt))}</div>
                   <div>{chrome.i18n.getMessage("updatedAtTime", formatDate(record.updatedAt))}</div>
                 </div>
@@ -206,35 +206,35 @@ export function RecordDetail({ record, onClose, onUpdate, onDelete }: RecordDeta
         </div>
 
         {/* Footer */}
-        <div className="plasmo-flex plasmo-items-center plasmo-justify-between plasmo-p-4 plasmo-border-t plasmo-border-gray-200">
+        <div className="flex items-center justify-between p-4 border-t border-gray-200">
           {isEditing ? (
-            <div className="plasmo-flex plasmo-space-x-2 plasmo-w-full">
+            <div className="flex space-x-2 w-full">
               <button
                 onClick={handleCancel}
                 disabled={saving}
-                className="plasmo-flex-1 plasmo-px-3 plasmo-py-2 plasmo-text-sm plasmo-text-gray-700 plasmo-bg-gray-100 plasmo-rounded-md hover:plasmo-bg-gray-200 plasmo-transition-colors disabled:plasmo-opacity-50"
+                className="flex-1 px-3 py-2 text-sm text-gray-700 bg-gray-100 rounded-md hover:bg-gray-200 transition-colors disabled:opacity-50"
               >
                 {chrome.i18n.getMessage("cancel")}
               </button>
               <button
                 onClick={handleSave}
                 disabled={saving}
-                className="plasmo-flex-1 plasmo-px-3 plasmo-py-2 plasmo-text-sm plasmo-text-white plasmo-bg-blue-600 plasmo-rounded-md hover:plasmo-bg-blue-700 plasmo-transition-colors disabled:plasmo-opacity-50"
+                className="flex-1 px-3 py-2 text-sm text-white bg-blue-600 rounded-md hover:bg-blue-700 transition-colors disabled:opacity-50"
               >
                 {saving ? chrome.i18n.getMessage("saving") : chrome.i18n.getMessage("save")}
               </button>
             </div>
           ) : (
-            <div className="plasmo-flex plasmo-space-x-2 plasmo-w-full">
+            <div className="flex space-x-2 w-full">
               <button
                 onClick={handleDeleteClick}
-                className="plasmo-px-3 plasmo-py-2 plasmo-text-sm plasmo-text-red-600 plasmo-bg-red-50 plasmo-rounded-md hover:plasmo-bg-red-100 plasmo-transition-colors"
+                className="px-3 py-2 text-sm text-red-600 bg-red-50 rounded-md hover:bg-red-100 transition-colors"
               >
                 {chrome.i18n.getMessage("delete")}
               </button>
               <button
                 onClick={() => setIsEditing(true)}
-                className="plasmo-flex-1 plasmo-px-3 plasmo-py-2 plasmo-text-sm plasmo-text-white plasmo-bg-blue-600 plasmo-rounded-md hover:plasmo-bg-blue-700 plasmo-transition-colors"
+                className="flex-1 px-3 py-2 text-sm text-white bg-blue-600 rounded-md hover:bg-blue-700 transition-colors"
               >
                 {chrome.i18n.getMessage("edit")}
               </button>

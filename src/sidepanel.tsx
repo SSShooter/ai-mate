@@ -132,42 +132,42 @@ function IndexSidepanel() {
   }
 
   return (
-    <div className="plasmo-w-full plasmo-h-screen plasmo-bg-white plasmo-flex plasmo-flex-col">
+    <div className="w-full h-screen bg-white flex flex-col">
       {/* Header */}
-      <div className="plasmo-bg-blue-600 plasmo-text-white plasmo-p-2">
-        <h1 className="plasmo-text-lg plasmo-font-semibold">
+      <div className="bg-blue-600 text-white p-2">
+        <h1 className="text-lg font-semibold">
           {chrome.i18n.getMessage("appTitle")}
         </h1>
       </div>
 
       {/* Navigation Tabs */}
-      <div className="plasmo-flex plasmo-border-b plasmo-border-gray-200">
+      <div className="flex border-b border-gray-200">
         <button
           onClick={() => setActiveTab("records")}
-          className={`plasmo-flex-1 plasmo-py-2 plasmo-px-3 plasmo-text-sm plasmo-font-medium plasmo-transition-colors ${
+          className={`flex-1 py-2 px-3 text-sm font-medium transition-colors ${
             activeTab === "records"
-              ? "plasmo-bg-blue-50 plasmo-text-blue-600 plasmo-border-b-2 plasmo-border-blue-600"
-              : "plasmo-text-gray-600 hover:plasmo-text-gray-800 hover:plasmo-bg-gray-50"
+              ? "bg-blue-50 text-blue-600 border-b-2 border-blue-600"
+              : "text-gray-600 hover:text-gray-800 hover:bg-gray-50"
           }`}>
           {chrome.i18n.getMessage("recordManagement")}
         </button>
         <button
           onClick={() => setActiveTab("prompts")}
-          className={`plasmo-flex-1 plasmo-py-2 plasmo-px-3 plasmo-text-sm plasmo-font-medium plasmo-transition-colors ${
+          className={`flex-1 py-2 px-3 text-sm font-medium transition-colors ${
             activeTab === "prompts"
-              ? "plasmo-bg-blue-50 plasmo-text-blue-600 plasmo-border-b-2 plasmo-border-blue-600"
-              : "plasmo-text-gray-600 hover:plasmo-text-gray-800 hover:plasmo-bg-gray-50"
+              ? "bg-blue-50 text-blue-600 border-b-2 border-blue-600"
+              : "text-gray-600 hover:text-gray-800 hover:bg-gray-50"
           }`}>
           {chrome.i18n.getMessage("promptManagement")}
         </button>
       </div>
 
       {/* Content Area */}
-      <div className="plasmo-flex-1 plasmo-overflow-hidden">
+      <div className="flex-1 overflow-hidden">
         {activeTab === "records" && (
-          <div className="plasmo-h-full plasmo-flex plasmo-flex-col">
+          <div className="h-full flex flex-col">
             {/* Category Tabs */}
-            <div className="plasmo-flex plasmo-bg-gray-50 plasmo-border-b plasmo-border-gray-200">
+            <div className="flex bg-gray-50 border-b border-gray-200">
               {(
                 [
                   "inspiration",
@@ -179,10 +179,10 @@ function IndexSidepanel() {
                 <button
                   key={category}
                   onClick={() => setActiveCategory(category)}
-                  className={`plasmo-flex-1 plasmo-py-1.5 plasmo-px-2 plasmo-text-xs plasmo-font-medium plasmo-transition-colors ${
+                  className={`flex-1 py-1.5 px-2 text-xs font-medium transition-colors ${
                     activeCategory === category
-                      ? "plasmo-bg-white plasmo-text-blue-600 plasmo-border-b-2 plasmo-border-blue-600"
-                      : "plasmo-text-gray-600 hover:plasmo-text-gray-800 hover:plasmo-bg-gray-100"
+                      ? "bg-white text-blue-600 border-b-2 border-blue-600"
+                      : "text-gray-600 hover:text-gray-800 hover:bg-gray-100"
                   }`}>
                   {getCategoryLabel(category)}
                 </button>
@@ -190,7 +190,7 @@ function IndexSidepanel() {
             </div>
 
             {/* Search Bar */}
-            <div className="plasmo-p-2 plasmo-bg-white plasmo-border-b plasmo-border-gray-200">
+            <div className="p-2 bg-white border-b border-gray-200">
               <SearchBar
                 value={searchQuery}
                 onChange={setSearchQuery}
@@ -199,7 +199,7 @@ function IndexSidepanel() {
             </div>
 
             {/* Records Content */}
-            <div className="plasmo-flex-1 plasmo-p-3 plasmo-overflow-y-auto plasmo-bg-gray-50">
+            <div className="flex-1 p-3 overflow-y-auto bg-gray-50">
               <RecordList
                 category={activeCategory}
                 searchQuery={searchQuery}
@@ -210,20 +210,20 @@ function IndexSidepanel() {
           </div>
         )}
         {activeTab === "prompts" && (
-          <div className="plasmo-h-full plasmo-flex plasmo-flex-col">
+          <div className="h-full flex flex-col">
             {/* Prompt Header with Add Button */}
-            <div className="plasmo-p-3 plasmo-bg-white plasmo-border-b plasmo-border-gray-200">
-              <div className="plasmo-flex plasmo-items-center plasmo-justify-between">
+            <div className="p-3 bg-white border-b border-gray-200">
+              <div className="flex items-center justify-between">
                 <button
                   onClick={handleAddPrompt}
-                  className="plasmo-px-3 plasmo-py-1.5 plasmo-text-sm plasmo-font-medium plasmo-text-white plasmo-bg-blue-600 plasmo-border plasmo-border-transparent plasmo-rounded-md hover:plasmo-bg-blue-700 plasmo-transition-colors">
+                  className="px-3 py-1.5 text-sm font-medium text-white bg-blue-600 border border-transparent rounded-md hover:bg-blue-700 transition-colors">
                   {chrome.i18n.getMessage("addPrompt")}
                 </button>
               </div>
             </div>
 
             {/* Prompt List */}
-            <div className="plasmo-flex-1 plasmo-p-3 plasmo-overflow-y-auto plasmo-bg-gray-50">
+            <div className="flex-1 p-3 overflow-y-auto bg-gray-50">
               <PromptList
                 onEdit={handleEditPrompt}
                 onDelete={handleDeletePrompt}

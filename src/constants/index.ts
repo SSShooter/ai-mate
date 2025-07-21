@@ -73,6 +73,6 @@ export const CONTEXT_MENU_IDS = {
 
 // CSS class prefixes for Plasmo
 export const CSS_PREFIXES = {
-  PLASMO: "plasmo-",
+  PLASMO: "",
   EXTENSION: "ai-mate-"
 }

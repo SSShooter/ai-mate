@@ -26,10 +26,10 @@ export function SearchBar({ value, onChange, placeholder = chrome.i18n.getMessag
   }
 
   return (
-    <div className={`plasmo-relative ${className}`}>
-      <div className="plasmo-relative">
-        <div className="plasmo-absolute plasmo-inset-y-0 plasmo-left-0 plasmo-pl-3 plasmo-flex plasmo-items-center plasmo-pointer-events-none">
-          <svg className="plasmo-w-4 plasmo-h-4 plasmo-text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+    <div className={`relative ${className}`}>
+      <div className="relative">
+        <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+          <svg className="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
           </svg>
         </div>
@@ -37,15 +37,15 @@ export function SearchBar({ value, onChange, placeholder = chrome.i18n.getMessag
           type="text"
           value={localValue}
           onChange={(e) => setLocalValue(e.target.value)}
-          className="plasmo-block plasmo-w-full plasmo-pl-10 plasmo-pr-10 plasmo-py-2 plasmo-border plasmo-border-gray-300 plasmo-rounded-md plasmo-text-sm plasmo-placeholder-gray-500 focus:plasmo-outline-none focus:plasmo-ring-2 focus:plasmo-ring-blue-500 focus:plasmo-border-transparent"
+          className="block w-full pl-10 pr-10 py-2 border border-gray-300 rounded-md text-sm placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
           placeholder={placeholder}
         />
         {localValue && (
           <button
             onClick={handleClear}
-            className="plasmo-absolute plasmo-inset-y-0 plasmo-right-0 plasmo-pr-3 plasmo-flex plasmo-items-center plasmo-text-gray-400 hover:plasmo-text-gray-600"
+            className="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 hover:text-gray-600"
           >
-            <svg className="plasmo-w-4 plasmo-h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
             </svg>
           </button>

@@ -53,19 +53,19 @@ export function PromptList({
 
   if (loading) {
     return (
-      <div className="plasmo-flex plasmo-items-center plasmo-justify-center plasmo-py-8">
-        <div className="plasmo-text-gray-500">{chrome.i18n.getMessage("loading")}</div>
+      <div className="flex items-center justify-center py-8">
+        <div className="text-gray-500">{chrome.i18n.getMessage("loading")}</div>
       </div>
     )
   }
 
   if (error) {
     return (
-      <div className="plasmo-text-center plasmo-py-8">
-        <div className="plasmo-text-red-500 plasmo-mb-2">{error}</div>
+      <div className="text-center py-8">
+        <div className="text-red-500 mb-2">{error}</div>
         <button
           onClick={loadPrompts}
-          className="plasmo-text-blue-600 hover:plasmo-text-blue-800 plasmo-text-sm">
+          className="text-blue-600 hover:text-blue-800 text-sm">
           {chrome.i18n.getMessage("retry")}
         </button>
       </div>
@@ -74,9 +74,9 @@ export function PromptList({
 
   if (prompts.length === 0) {
     return (
-      <div className="plasmo-text-center plasmo-py-8 plasmo-text-gray-500">
-        <div className="plasmo-mb-2">{chrome.i18n.getMessage("noPrompts")}</div>
-        <div className="plasmo-text-sm">
+      <div className="text-center py-8 text-gray-500">
+        <div className="mb-2">{chrome.i18n.getMessage("noPrompts")}</div>
+        <div className="text-sm">
           {chrome.i18n.getMessage("noPromptsHint")}
         </div>
       </div>
@@ -84,41 +84,41 @@ export function PromptList({
   }
 
   return (
-    <div className="plasmo-space-y-2">
+    <div className="space-y-2">
       {prompts.map((prompt) => (
         <div
           key={prompt.id}
           onClick={() => onPromptClick?.(prompt)}
-          className="plasmo-bg-white plasmo-border plasmo-border-gray-200 plasmo-rounded-lg plasmo-p-4 hover:plasmo-bg-gray-50 plasmo-cursor-pointer plasmo-transition-colors">
-          <div className="plasmo-flex plasmo-items-start plasmo-justify-between">
-            <div className="plasmo-flex-1 plasmo-min-w-0">
-              <div className="plasmo-flex plasmo-items-center plasmo-gap-2 plasmo-mb-2">
-                <span className="plasmo-inline-flex plasmo-items-center plasmo-px-2 plasmo-py-1 plasmo-rounded plasmo-text-xs plasmo-font-medium plasmo-bg-blue-100 plasmo-text-blue-800">
+          className="bg-white border border-gray-200 rounded-lg p-4 hover:bg-gray-50 cursor-pointer transition-colors">
+          <div className="flex items-start justify-between">
+            <div className="flex-1 min-w-0">
+              <div className="flex items-center gap-2 mb-2">
+                <span className="inline-flex items-center px-2 py-1 rounded text-xs font-medium bg-blue-100 text-blue-800">
                   {prompt.key}
                 </span>
-                <h3 className="plasmo-font-medium plasmo-text-gray-900 plasmo-truncate">
+                <h3 className="font-medium text-gray-900 truncate">
                   {prompt.title}
                 </h3>
               </div>
               {prompt.description && (
-                <p className="plasmo-text-sm plasmo-text-gray-600 plasmo-mb-2 plasmo-line-clamp-2">
+                <p className="text-sm text-gray-600 mb-2 line-clamp-2">
                   {prompt.description}
                 </p>
               )}
-              <p className="plasmo-text-sm plasmo-text-gray-500 plasmo-line-clamp-2">
+              <p className="text-sm text-gray-500 line-clamp-2">
                 {prompt.content}
               </p>
-              <div className="plasmo-text-xs plasmo-text-gray-400 plasmo-mt-2">
+              <div className="text-xs text-gray-400 mt-2">
                 {chrome.i18n.getMessage("updatedAt", formatDate(prompt.updatedAt))}
               </div>
             </div>
-            <div className="plasmo-flex plasmo-gap-1 plasmo-ml-2">
+            <div className="flex gap-1 ml-2">
               <button
                 onClick={(e) => handleEdit(prompt, e)}
-                className="plasmo-p-1 plasmo-text-gray-400 hover:plasmo-text-blue-600 plasmo-transition-colors"
+                className="p-1 text-gray-400 hover:text-blue-600 transition-colors"
                 title={chrome.i18n.getMessage("edit")}>
                 <svg
-                  className="plasmo-w-4 plasmo-h-4"
+                  className="w-4 h-4"
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24">
@@ -132,10 +132,10 @@ export function PromptList({
               </button>
               <button
                 onClick={(e) => handleDelete(prompt, e)}
-                className="plasmo-p-1 plasmo-text-gray-400 hover:plasmo-text-red-600 plasmo-transition-colors"
+                className="p-1 text-gray-400 hover:text-red-600 transition-colors"
                 title={chrome.i18n.getMessage("delete")}>
                 <svg
-                  className="plasmo-w-4 plasmo-h-4"
+                  className="w-4 h-4"
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24">

@@ -59,6 +59,7 @@ function matchesShortcut(event: KeyboardEvent, shortcut: string): boolean {
 export const getStyle = (): HTMLStyleElement => {
   const baseFontSize = 16
 
+  // let updatedCssText = cssText.replaceAll(":root", ":host(csui)")
   let updatedCssText = cssText.replaceAll(":root", ":host(plasmo-csui)")
   const remRegex = /([\d.]+)rem/g
   updatedCssText = updatedCssText.replace(remRegex, (match, remValue) => {
@@ -456,7 +457,7 @@ class PromptReplacementEngine {
       element.tagName.toLowerCase() === "input" ||
       element.tagName.toLowerCase() === "textarea"
     ) {
-      ;(element as HTMLInputElement | HTMLTextAreaElement).value = text
+      ; (element as HTMLInputElement | HTMLTextAreaElement).value = text
       // Trigger input event to notify other listeners
       element.dispatchEvent(new Event("input", { bubbles: true }))
     } else if (element.contentEditable === "true") {

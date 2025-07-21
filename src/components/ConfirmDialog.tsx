@@ -24,35 +24,35 @@ export function ConfirmDialog({
   if (!isOpen) return null
 
   return (
-    <div className="plasmo-fixed plasmo-inset-0 plasmo-bg-black plasmo-bg-opacity-50 plasmo-flex plasmo-items-center plasmo-justify-center plasmo-z-50">
-      <div className="plasmo-bg-white plasmo-rounded-lg plasmo-shadow-xl plasmo-w-80 plasmo-max-w-sm">
+    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+      <div className="bg-white rounded-lg shadow-xl w-80 max-w-sm">
         {/* Header */}
-        <div className="plasmo-p-4 plasmo-border-b plasmo-border-gray-200">
-          <h3 className="plasmo-text-lg plasmo-font-semibold plasmo-text-gray-800">
+        <div className="p-4 border-b border-gray-200">
+          <h3 className="text-lg font-semibold text-gray-800">
             {title}
           </h3>
         </div>
 
         {/* Content */}
-        <div className="plasmo-p-4">
-          <p className="plasmo-text-sm plasmo-text-gray-600 plasmo-leading-relaxed">
+        <div className="p-4">
+          <p className="text-sm text-gray-600 leading-relaxed">
             {message}
           </p>
         </div>
 
         {/* Footer */}
-        <div className="plasmo-flex plasmo-space-x-2 plasmo-p-4 plasmo-border-t plasmo-border-gray-200">
+        <div className="flex space-x-2 p-4 border-t border-gray-200">
           <button
             onClick={onCancel}
-            className="plasmo-flex-1 plasmo-px-3 plasmo-py-2 plasmo-text-sm plasmo-text-gray-700 plasmo-bg-gray-100 plasmo-rounded-md hover:plasmo-bg-gray-200 plasmo-transition-colors">
+            className="flex-1 px-3 py-2 text-sm text-gray-700 bg-gray-100 rounded-md hover:bg-gray-200 transition-colors">
             {cancelText}
           </button>
           <button
             onClick={onConfirm}
-            className={`plasmo-flex-1 plasmo-px-3 plasmo-py-2 plasmo-text-sm plasmo-text-white plasmo-rounded-md plasmo-transition-colors ${
+            className={`flex-1 px-3 py-2 text-sm text-white rounded-md transition-colors ${
               isDestructive
-                ? "plasmo-bg-red-600 hover:plasmo-bg-red-700"
-                : "plasmo-bg-blue-600 hover:plasmo-bg-blue-700"
+                ? "bg-red-600 hover:bg-red-700"
+                : "bg-blue-600 hover:bg-blue-700"
             }`}>
             {confirmText}
           </button>

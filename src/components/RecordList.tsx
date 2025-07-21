@@ -76,20 +76,20 @@ export function RecordList({ category, searchQuery = "", onRecordClick, refreshT
 
   if (loading) {
     return (
-      <div className="plasmo-flex plasmo-items-center plasmo-justify-center plasmo-py-8">
-        <div className="plasmo-text-sm plasmo-text-gray-500">{chrome.i18n.getMessage("loading")}</div>
+      <div className="flex items-center justify-center py-8">
+        <div className="text-sm text-gray-500">{chrome.i18n.getMessage("loading")}</div>
       </div>
     )
   }
 
   if (error) {
     return (
-      <div className="plasmo-flex plasmo-flex-col plasmo-items-center plasmo-justify-center plasmo-py-8">
-        <div className="plasmo-text-sm plasmo-text-red-500 plasmo-mb-2">{chrome.i18n.getMessage("loadFailed")}</div>
-        <div className="plasmo-text-xs plasmo-text-gray-400 plasmo-mb-4">{error}</div>
+      <div className="flex flex-col items-center justify-center py-8">
+        <div className="text-sm text-red-500 mb-2">{chrome.i18n.getMessage("loadFailed")}</div>
+        <div className="text-xs text-gray-400 mb-4">{error}</div>
         <button
           onClick={loadRecords}
-          className="plasmo-px-3 plasmo-py-1 plasmo-text-xs plasmo-bg-blue-500 plasmo-text-white plasmo-rounded hover:plasmo-bg-blue-600"
+          className="px-3 py-1 text-xs bg-blue-500 text-white rounded hover:bg-blue-600"
         >
           {chrome.i18n.getMessage("retry")}
         </button>
@@ -100,16 +100,16 @@ export function RecordList({ category, searchQuery = "", onRecordClick, refreshT
   // Empty state
   if (filteredRecords.length === 0) {
     return (
-      <div className="plasmo-flex plasmo-flex-col plasmo-items-center plasmo-justify-center plasmo-py-8">
-        <div className="plasmo-text-gray-400 plasmo-mb-2">
-          <svg className="plasmo-w-12 plasmo-h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <div className="flex flex-col items-center justify-center py-8">
+        <div className="text-gray-400 mb-2">
+          <svg className="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
           </svg>
         </div>
-        <div className="plasmo-text-sm plasmo-text-gray-500 plasmo-mb-1">
+        <div className="text-sm text-gray-500 mb-1">
           {searchQuery.trim() ? chrome.i18n.getMessage("noRecordsFound") : chrome.i18n.getMessage("noRecordsInCategory", getCategoryLabel(category))}
         </div>
-        <div className="plasmo-text-xs plasmo-text-gray-400">
+        <div className="text-xs text-gray-400">
           {searchQuery.trim() ? chrome.i18n.getMessage("adjustSearchKeywords") : chrome.i18n.getMessage("quickRecordHint")}
         </div>
       </div>
@@ -117,20 +117,20 @@ export function RecordList({ category, searchQuery = "", onRecordClick, refreshT
   }
 
   return (
-    <div className="plasmo-space-y-3">
+    <div className="space-y-3">
       {filteredRecords.map((record) => (
         <div
           key={record.id}
           onClick={() => onRecordClick?.(record)}
-          className="plasmo-bg-white plasmo-border plasmo-border-gray-200 plasmo-rounded-lg plasmo-p-3 hover:plasmo-shadow-sm plasmo-transition-shadow plasmo-cursor-pointer hover:plasmo-border-blue-300"
+          className="bg-white border border-gray-200 rounded-lg p-3 hover:shadow-sm transition-shadow cursor-pointer hover:border-blue-300"
         >
           {/* Record content - main focus */}
-          <div className="plasmo-text-sm plasmo-text-gray-800 plasmo-mb-2 plasmo-leading-relaxed">
+          <div className="text-sm text-gray-800 mb-2 leading-relaxed">
             {truncateText(record.content, 150)}
           </div>
           
           {/* Simplified metadata - only timestamp */}
-          <div className="plasmo-text-xs plasmo-text-gray-400">
+          <div className="text-xs text-gray-400">
             {formatDate(record.createdAt)}
           </div>
         </div>
