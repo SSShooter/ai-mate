@@ -20,7 +20,7 @@ export const SyncStatus: React.FC<SyncStatusProps> = ({ onSyncComplete }) => {
       setSyncState(state)
     } catch (err) {
       console.error("Failed to load sync state:", err)
-      setError("加载同步状态失败")
+      setError(chrome.i18n.getMessage("loadSyncStateFailed"))
     }
   }
 
@@ -49,7 +49,7 @@ export const SyncStatus: React.FC<SyncStatusProps> = ({ onSyncComplete }) => {
       }
     } catch (err) {
       console.error("Sync failed:", err)
-      setError(err.message || "同步失败")
+      setError(err.message || chrome.i18n.getMessage("syncFailed"))
     } finally {
       setLoading(false)
     }
@@ -57,23 +57,23 @@ export const SyncStatus: React.FC<SyncStatusProps> = ({ onSyncComplete }) => {
 
   // 格式化上次同步时间
   const formatLastSyncTime = (timestamp: number | null) => {
-    if (!timestamp) return "从未同步"
+    if (!timestamp) return chrome.i18n.getMessage("neverSynced")
     
     const now = new Date()
     const syncTime = new Date(timestamp)
     const diffMs = now.getTime() - syncTime.getTime()
     const diffMins = Math.floor(diffMs / 60000)
     
-    if (diffMins < 1) return "刚刚"
-    if (diffMins < 60) return `${diffMins}分钟前`
+    if (diffMins < 1) return chrome.i18n.getMessage("justNow")
+    if (diffMins < 60) return chrome.i18n.getMessage("minutesAgo", diffMins.toString())
     
     const diffHours = Math.floor(diffMins / 60)
-    if (diffHours < 24) return `${diffHours}小时前`
+    if (diffHours < 24) return chrome.i18n.getMessage("hoursAgo", diffHours.toString())
     
     const diffDays = Math.floor(diffHours / 24)
-    if (diffDays < 30) return `${diffDays}天前`
+    if (diffDays < 30) return chrome.i18n.getMessage("daysAgo", diffDays.toString())
     
-    return syncTime.toLocaleDateString("zh-CN")
+    return syncTime.toLocaleDateString()
   }
 
 
@@ -81,17 +81,17 @@ export const SyncStatus: React.FC<SyncStatusProps> = ({ onSyncComplete }) => {
   // 获取状态文本
   const getStatusText = (status: string) => {
     switch (status) {
-      case "idle": return "空闲"
-      case "syncing": return "同步中"
-      case "success": return "成功"
-      case "error": return "错误"
-      case "conflict": return "冲突"
+      case "idle": return chrome.i18n.getMessage("idle")
+      case "syncing": return chrome.i18n.getMessage("syncing")
+      case "success": return chrome.i18n.getMessage("success")
+      case "error": return chrome.i18n.getMessage("error")
+      case "conflict": return chrome.i18n.getMessage("conflict")
       default: return status
     }
   }
 
   if (!syncState) {
-    return <div>加载中...</div>
+    return <div>{chrome.i18n.getMessage("loading")}</div>
   }
 
   if (showConfig) {
@@ -110,7 +110,7 @@ export const SyncStatus: React.FC<SyncStatusProps> = ({ onSyncComplete }) => {
   return (
     <div className="flex items-center gap-2 px-3 py-2 bg-gray-50 border-b border-gray-200 text-sm">
       <div className="flex items-center gap-2">
-        <span className="font-medium">同步:</span>
+        <span className="font-medium">{chrome.i18n.getMessage("sync")}:</span>
         <span className={`px-2 py-1 rounded-full text-xs ${
           syncState.status === "success" ? "bg-green-100 text-green-800" :
           syncState.status === "error" ? "bg-red-100 text-red-800" :
@@ -123,7 +123,7 @@ export const SyncStatus: React.FC<SyncStatusProps> = ({ onSyncComplete }) => {
 
       {syncState.lastSyncTime && (
         <div className="text-gray-600 text-xs">
-          上次: {formatLastSyncTime(syncState.lastSyncTime)}
+          {chrome.i18n.getMessage("lastSyncTime")}: {formatLastSyncTime(syncState.lastSyncTime)}
         </div>
       )}
 
@@ -133,14 +133,14 @@ export const SyncStatus: React.FC<SyncStatusProps> = ({ onSyncComplete }) => {
           disabled={loading || !syncState.isConfigured}
           className="px-2 py-1 bg-cyan-600 text-white rounded text-xs hover:bg-cyan-700 disabled:opacity-50 disabled:cursor-not-allowed"
         >
-          {loading ? "同步中..." : "同步"}
+          {loading ? chrome.i18n.getMessage("syncing") : chrome.i18n.getMessage("sync")}
         </button>
 
         <button
           onClick={() => setShowConfig(true)}
           className="px-2 py-1 bg-gray-600 text-white rounded text-xs hover:bg-gray-700"
         >
-          配置
+          {chrome.i18n.getMessage("config")}
         </button>
       </div>
 

@@ -106,9 +106,6 @@
   "contentEmpty": {
     "message": "内容不能为空"
   },
-  "saveFailed": {
-    "message": "保存失败，请重试"
-  },
   "loadPromptsFailed": {
     "message": "加载 Prompt 失败"
   },
@@ -194,5 +191,205 @@
   },
   "searchRecords": {
     "message": "搜索记录..."
+  },
+  "syncConfig": {
+    "message": "数据同步配置"
+  },
+  "workerUrlLabel": {
+    "message": "Cloudflare Worker URL:"
+  },
+  "workerUrlPlaceholder": {
+    "message": "https://your-worker.your-subdomain.workers.dev"
+  },
+  "apiKeyLabel": {
+    "message": "API Key:"
+  },
+  "apiKeyPlaceholder": {
+    "message": "输入或生成 API Key"
+  },
+  "show": {
+    "message": "显示"
+  },
+  "hide": {
+    "message": "隐藏"
+  },
+  "generate": {
+    "message": "生成"
+  },
+  "enableSync": {
+    "message": "启用同步功能"
+  },
+  "enableAutoSync": {
+    "message": "启用自动同步"
+  },
+  "syncIntervalLabel": {
+    "message": "同步间隔（分钟）:"
+  },
+  "testConnection": {
+    "message": "测试连接"
+  },
+  "testing": {
+    "message": "测试中..."
+  },
+  "saveConfig": {
+    "message": "保存配置"
+  },
+  "syncNow": {
+    "message": "立即同步"
+  },
+  "syncing": {
+    "message": "同步中..."
+  },
+  "resetConfig": {
+    "message": "重置配置"
+  },
+  "syncStatus": {
+    "message": "同步状态"
+  },
+  "status": {
+    "message": "状态"
+  },
+  "configStatus": {
+    "message": "配置状态"
+  },
+  "lastSync": {
+    "message": "上次同步"
+  },
+  "errorMessage": {
+    "message": "错误信息"
+  },
+  "idle": {
+    "message": "空闲"
+  },
+  "success": {
+    "message": "成功"
+  },
+  "error": {
+    "message": "错误"
+  },
+  "configured": {
+    "message": "已配置"
+  },
+  "notConfigured": {
+    "message": "未配置"
+  },
+  "neverSynced": {
+    "message": "从未同步"
+  },
+  "usageInstructions": {
+    "message": "使用说明:"
+  },
+  "instruction1": {
+    "message": "复制 docs/cloudflare-worker-template.js 中的代码"
+  },
+  "instruction2": {
+    "message": "在 Cloudflare Dashboard 中创建新的 Worker 并粘贴代码"
+  },
+  "instruction3": {
+    "message": "创建 KV 命名空间 \"AI_MATE_SYNC\" 并绑定到 Worker"
+  },
+  "instruction4": {
+    "message": "部署 Worker 并复制 URL 到上面的配置中"
+  },
+  "instruction5": {
+    "message": "生成或输入 API Key，测试连接后保存配置"
+  },
+  "instruction6": {
+    "message": "启用同步功能，可选择开启自动同步"
+  },
+  "fillWorkerUrlAndApiKey": {
+    "message": "请先填写 Worker URL 和 API Key"
+  },
+  "connectionTestSuccess": {
+    "message": "✅ 连接测试成功！"
+  },
+  "connectionFailed": {
+    "message": "❌ 连接失败: $error$",
+    "placeholders": {
+      "error": {
+        "content": "$1"
+      }
+    }
+  },
+  "configSaveSuccess": {
+    "message": "✅ 配置保存成功！"
+  },
+  "saveFailed": {
+    "message": "❌ 保存失败: $error$",
+    "placeholders": {
+      "error": {
+        "content": "$1"
+      }
+    }
+  },
+  "syncSuccess": {
+    "message": "✅ 同步成功！"
+  },
+  "syncFailed": {
+    "message": "❌ 同步失败: $error$",
+    "placeholders": {
+      "error": {
+        "content": "$1"
+      }
+    }
+  },
+  "configReset": {
+    "message": "✅ 配置已重置"
+  },
+  "resetFailed": {
+    "message": "❌ 重置失败: $error$",
+    "placeholders": {
+      "error": {
+        "content": "$1"
+      }
+    }
+  },
+  "resetConfigConfirm": {
+    "message": "确定要重置所有同步配置吗？"
+  },
+  "sync": {
+    "message": "同步"
+  },
+  "config": {
+    "message": "配置"
+  },
+  "loadSyncStateFailed": {
+    "message": "加载同步状态失败"
+  },
+  "syncFailed": {
+    "message": "同步失败"
+  },
+  "justNow": {
+    "message": "刚刚"
+  },
+  "minutesAgo": {
+    "message": "$minutes$分钟前",
+    "placeholders": {
+      "minutes": {
+        "content": "$1"
+      }
+    }
+  },
+  "hoursAgo": {
+    "message": "$hours$小时前",
+    "placeholders": {
+      "hours": {
+        "content": "$1"
+      }
+    }
+  },
+  "daysAgo": {
+    "message": "$days$天前",
+    "placeholders": {
+      "days": {
+        "content": "$1"
+      }
+    }
+  },
+  "conflict": {
+    "message": "冲突"
+  },
+  "lastSyncTime": {
+    "message": "上次"
   }
 }

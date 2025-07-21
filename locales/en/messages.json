@@ -106,9 +106,6 @@
   "contentEmpty": {
     "message": "Content cannot be empty"
   },
-  "saveFailed": {
-    "message": "Save failed, please try again"
-  },
   "loadPromptsFailed": {
     "message": "Failed to load prompts"
   },
@@ -194,5 +191,205 @@
   },
   "searchRecords": {
     "message": "Search records..."
+  },
+  "syncConfig": {
+    "message": "Data Sync Configuration"
+  },
+  "workerUrlLabel": {
+    "message": "Cloudflare Worker URL:"
+  },
+  "workerUrlPlaceholder": {
+    "message": "https://your-worker.your-subdomain.workers.dev"
+  },
+  "apiKeyLabel": {
+    "message": "API Key:"
+  },
+  "apiKeyPlaceholder": {
+    "message": "Enter or generate API Key"
+  },
+  "show": {
+    "message": "Show"
+  },
+  "hide": {
+    "message": "Hide"
+  },
+  "generate": {
+    "message": "Generate"
+  },
+  "enableSync": {
+    "message": "Enable sync functionality"
+  },
+  "enableAutoSync": {
+    "message": "Enable auto sync"
+  },
+  "syncIntervalLabel": {
+    "message": "Sync interval (minutes):"
+  },
+  "testConnection": {
+    "message": "Test Connection"
+  },
+  "testing": {
+    "message": "Testing..."
+  },
+  "saveConfig": {
+    "message": "Save Config"
+  },
+  "syncNow": {
+    "message": "Sync Now"
+  },
+  "syncing": {
+    "message": "Syncing..."
+  },
+  "resetConfig": {
+    "message": "Reset Config"
+  },
+  "syncStatus": {
+    "message": "Sync Status"
+  },
+  "status": {
+    "message": "Status"
+  },
+  "configStatus": {
+    "message": "Config Status"
+  },
+  "lastSync": {
+    "message": "Last Sync"
+  },
+  "errorMessage": {
+    "message": "Error Message"
+  },
+  "idle": {
+    "message": "Idle"
+  },
+  "success": {
+    "message": "Success"
+  },
+  "error": {
+    "message": "Error"
+  },
+  "configured": {
+    "message": "Configured"
+  },
+  "notConfigured": {
+    "message": "Not Configured"
+  },
+  "neverSynced": {
+    "message": "Never synced"
+  },
+  "usageInstructions": {
+    "message": "Usage Instructions:"
+  },
+  "instruction1": {
+    "message": "Copy the code from docs/cloudflare-worker-template.js"
+  },
+  "instruction2": {
+    "message": "Create a new Worker in Cloudflare Dashboard and paste the code"
+  },
+  "instruction3": {
+    "message": "Create KV namespace \"AI_MATE_SYNC\" and bind it to the Worker"
+  },
+  "instruction4": {
+    "message": "Deploy the Worker and copy the URL to the configuration above"
+  },
+  "instruction5": {
+    "message": "Generate or enter API Key, test connection and save configuration"
+  },
+  "instruction6": {
+    "message": "Enable sync functionality, optionally enable auto sync"
+  },
+  "fillWorkerUrlAndApiKey": {
+    "message": "Please fill in Worker URL and API Key first"
+  },
+  "connectionTestSuccess": {
+    "message": "✅ Connection test successful!"
+  },
+  "connectionFailed": {
+    "message": "❌ Connection failed: $error$",
+    "placeholders": {
+      "error": {
+        "content": "$1"
+      }
+    }
+  },
+  "configSaveSuccess": {
+    "message": "✅ Configuration saved successfully!"
+  },
+  "saveFailed": {
+    "message": "❌ Save failed: $error$",
+    "placeholders": {
+      "error": {
+        "content": "$1"
+      }
+    }
+  },
+  "syncSuccess": {
+    "message": "✅ Sync successful!"
+  },
+  "syncFailed": {
+    "message": "❌ Sync failed: $error$",
+    "placeholders": {
+      "error": {
+        "content": "$1"
+      }
+    }
+  },
+  "configReset": {
+    "message": "✅ Configuration reset"
+  },
+  "resetFailed": {
+    "message": "❌ Reset failed: $error$",
+    "placeholders": {
+      "error": {
+        "content": "$1"
+      }
+    }
+  },
+  "resetConfigConfirm": {
+    "message": "Are you sure you want to reset all sync configuration?"
+  },
+  "sync": {
+    "message": "Sync"
+  },
+  "config": {
+    "message": "Config"
+  },
+  "loadSyncStateFailed": {
+    "message": "Failed to load sync state"
+  },
+  "syncFailed": {
+    "message": "Sync failed"
+  },
+  "justNow": {
+    "message": "Just now"
+  },
+  "minutesAgo": {
+    "message": "$minutes$ minutes ago",
+    "placeholders": {
+      "minutes": {
+        "content": "$1"
+      }
+    }
+  },
+  "hoursAgo": {
+    "message": "$hours$ hours ago",
+    "placeholders": {
+      "hours": {
+        "content": "$1"
+      }
+    }
+  },
+  "daysAgo": {
+    "message": "$days$ days ago",
+    "placeholders": {
+      "days": {
+        "content": "$1"
+      }
+    }
+  },
+  "conflict": {
+    "message": "Conflict"
+  },
+  "lastSyncTime": {
+    "message": "Last"
   }
 }
