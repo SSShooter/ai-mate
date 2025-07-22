@@ -2,7 +2,7 @@
   "name": "ai-mate",
   "displayName": "Ai mate",
   "version": "0.0.1",
-  "description": "A basic Plasmo extension.",
+  "description": "A browser extension for quick note-taking and intelligent prompt replacement.",
   "author": "ssshooter",
   "scripts": {
     "dev": "plasmo dev",
